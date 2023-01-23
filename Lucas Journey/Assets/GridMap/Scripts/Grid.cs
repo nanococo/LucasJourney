@@ -11,10 +11,7 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
 
 public class Grid {
 
@@ -77,6 +74,9 @@ public class Grid {
     public void GetXY(Vector3 worldPosition, out int x, out int y) {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+        Debug.Log(x);
+        Debug.Log(y);
+        Debug.Log("---------------");
     }
 
     public void SetValue(int x, int y, int value) {
@@ -104,6 +104,13 @@ public class Grid {
         int x, y;
         GetXY(worldPosition, out x, out y);
         return GetValue(x, y);
+    }
+
+    public GridElement MoveGridElementToXY(GridElement gridElement, int x, int y) {
+        gridElement.transform.position = GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f;
+        gridElement.X = x;
+        gridElement.Y = x;
+        return gridElement;
     }
 
 }
