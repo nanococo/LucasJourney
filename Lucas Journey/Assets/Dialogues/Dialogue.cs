@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class Dialogue : MonoBehaviour
 {
@@ -13,7 +14,12 @@ public class Dialogue : MonoBehaviour
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private TMP_Text exclamation;
     [SerializeField, TextArea(4,6)] private string[] dialogueLines;
-    
+    [SerializeField] private Image imagen_Personaje;
+
+
+    [SerializeField] private Sprite[] personajes;
+
+
 
 
     void Update()
@@ -35,6 +41,7 @@ public class Dialogue : MonoBehaviour
             else{
                 StopAllCoroutines();
                 dialogueText.text = dialogueLines[lineIndex];
+                imagen_Personaje.sprite = personajes[lineIndex % 2];
             }
         } 
         
@@ -56,6 +63,7 @@ public class Dialogue : MonoBehaviour
             StartCoroutine(ShowLine());
         }
         else{
+            imagen_Personaje.sprite = personajes[lineIndex % 2];
             didDialogueStart = false;
             dialoguePanel.SetActive(false);
             exclamation.text = "";
@@ -68,6 +76,7 @@ public class Dialogue : MonoBehaviour
 
         foreach(char ch in dialogueLines[lineIndex])
         {
+            imagen_Personaje.sprite = personajes[lineIndex % 2];
             dialogueText.text +=ch;
             yield return new WaitForSecondsRealtime(typingTime);
         }
