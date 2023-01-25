@@ -45,15 +45,15 @@ public class FighterAction : MonoBehaviour
             break;
  
         case "double":
-            //rangePrefab.GetComponent<AttackScript>().Attack(victim);
+            meleePrefab.GetComponent<AttackScript>().doubleAttack(victim);
             Debug.Log("Double!!");
             break;
         case "heal":
-            //rangePrefab.GetComponent<AttackScript>().Attack(victim);
+            meleePrefab.GetComponent<AttackScript>().heal();
             Debug.Log("Heal!!");
             break;
         case "guard":
-            //rangePrefab.GetComponent<AttackScript>().Attack(victim);
+            meleePrefab.GetComponent<AttackScript>().guardAttack(victim);
             Debug.Log("Guard break!!");
             break;
 

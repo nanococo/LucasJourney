@@ -7,10 +7,13 @@ using TMPro;
 
 public class CombatController : MonoBehaviour
 {
-
+    public bool startedByPlayer;
     private List<FighterStats> fighterStats;
     private int energyGained=0;
     
+    [SerializeField] public TMP_ColorGradient enemyGradient;
+    [SerializeField] public TMP_ColorGradient allyGradient;
+
     [SerializeField]
     private GameObject battleMenu;
     [SerializeField]
@@ -19,7 +22,7 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        
+        battleMenu.SetActive(false);
         Invoke("newOrders",3);
 
 
@@ -29,18 +32,21 @@ public class CombatController : MonoBehaviour
         fighterStats = new List<FighterStats>();
         GameObject hero = GameObject.FindGameObjectWithTag("Ally");
         FighterStats currentFighterStats = hero.GetComponent<FighterStats>();
-        currentFighterStats.CalculateNextTurn(0);
-        fighterStats.Add(currentFighterStats);
-
-
         GameObject foe = GameObject.FindGameObjectWithTag("Foe");
         FighterStats currentEnemyStats = foe.GetComponent<FighterStats>();
-        currentEnemyStats.CalculateNextTurn(0);
-        fighterStats.Add(currentEnemyStats);
 
+        if (startedByPlayer){
+            fighterStats.Add(currentFighterStats);
+            fighterStats.Add(currentEnemyStats);
+            fighterStats.Add(currentFighterStats);
+        }else{
+            fighterStats.Add(currentEnemyStats);
+            fighterStats.Add(currentFighterStats);
+            fighterStats.Add(currentEnemyStats);
+        }
+        
+        
 
-        //fighterStats.Sort();
-        battleMenu.SetActive(false);
         NextTurn();
 
     }
@@ -67,29 +73,30 @@ public class CombatController : MonoBehaviour
 
     public void NextTurn()
     {
-        //  Debug.Log(fighterStats.ToArray());
+       
         damageText.gameObject.SetActive(false);
-        FighterStats currentFighterStats = fighterStats[0];
-        fighterStats.Remove(currentFighterStats);
-
-        if(currentFighterStats.GetDead()){
-            GameObject  currentUnit = currentFighterStats.gameObject;
-            currentFighterStats.CalculateNextTurn(currentFighterStats.nextActTurn);
-            fighterStats.Add(currentFighterStats);
-            fighterStats.Sort();
-            if(currentUnit.tag=="Ally"){
-                this.battleMenu.SetActive(true);
-
-            }else{
-                Debug.Log("Enemy Attack!!");
-                this.battleMenu.SetActive(false);
-                string attackType= Random.Range(0,2)==1?"melee":"melee";
-                currentUnit.GetComponent<FighterAction>().SelectAttack(attackType);
-            }
+        
+        if(fighterStats.Count<=0){
+            Debug.Log("Termina la batalla, nadie pierde");
         }else{
-            NextTurn();
+            FighterStats currentFighterStats = fighterStats[0];
+            fighterStats.Remove(currentFighterStats);
+            if(currentFighterStats.GetDead()){
+                GameObject  currentUnit = currentFighterStats.gameObject;
+                if(currentUnit.tag=="Ally"){
+                    this.battleMenu.SetActive(true);
+
+                }else{
+                    this.battleMenu.SetActive(false);
+                    string attackType= Random.Range(0,2)==1?"melee":"melee";
+                    currentUnit.GetComponent<FighterAction>().SelectAttack(attackType);
+                }
+            }else{
+                NextTurn();
+            }
         }
-        //if(!GameObject.FindGameObjectWithTag)
+
+        
         
 
     

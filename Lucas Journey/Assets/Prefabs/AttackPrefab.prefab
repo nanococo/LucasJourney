@@ -46,9 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   animationName: Attacking
-  specialAttack: 0
-  specialCost: 0
   minAttackMultiplier: 1.5
   maxAttackMultiplier: 0.5
-  minDefenseMultiplier: 0.1
-  maxDefenseMultiplier: 0.5
+  minDefenseMultiplier: 1
+  maxDefenseMultiplier: 1.5

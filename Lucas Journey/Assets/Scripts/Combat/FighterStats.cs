@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System; 
 using TMPro;
 
+
 public class FighterStats : MonoBehaviour, IComparable
 {
     private bool dead = true;
@@ -36,7 +37,7 @@ public class FighterStats : MonoBehaviour, IComparable
     public int nextActTurn;
     //Resize bars
 
-
+    
 
     public Vector2 healthScale;
     public Vector2 energyScale;
@@ -78,9 +79,17 @@ public class FighterStats : MonoBehaviour, IComparable
 
 
         }
+        if(gameObject.tag.CompareTo("Ally")==0){
+            
+            GameController.GetComponent<CombatController>().damageText.colorGradientPreset=GameController.GetComponent<CombatController>().enemyGradient;
+        }else{
+            GameController.GetComponent<CombatController>().damageText.colorGradientPreset=GameController.GetComponent<CombatController>().allyGradient;
+        }
         GameController.GetComponent<CombatController>().damageText.gameObject.SetActive(true);
+        
+        
         GameController.GetComponent<CombatController>().damageText.text=damage.ToString();
-        Invoke("continueGame",1);
+        Invoke("continueGame",2);
     }
     /*
     public void updateEnergyFill(float cost){
@@ -91,6 +100,15 @@ public class FighterStats : MonoBehaviour, IComparable
         }
     }
     */
+    public void updateHealth(){
+        float addition = (UnityEngine.Random.Range(0.3f, 0.5f))*startHealth;
+        health += addition;
+        if(health>startHealth){
+            health=startHealth;
+        }
+    
+        healthFill.text = health.ToString();
+    }
     void continueGame(){
         GameObject.Find("CombatControllerObj").GetComponent<CombatController>().NextTurn();
     }

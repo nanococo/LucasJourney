@@ -578,10 +578,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 1
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0, b: 0, a: 1}
-    topRight: {r: 0.5566038, g: 0, b: 0, a: 1}
-    bottomLeft: {r: 1, g: 0, b: 0, a: 1}
-    bottomRight: {r: 0.5566038, g: 0, b: 0, a: 1}
+    topLeft: {r: 0, g: 0.5417571, b: 1, a: 1}
+    topRight: {r: 0.19332944, g: 0, b: 0.5568628, a: 1}
+    bottomLeft: {r: 0, g: 0.5417571, b: 1, a: 1}
+    bottomRight: {r: 0.19332944, g: 0, b: 0.5568628, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -1206,6 +1206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a684e095b3f66874198b23361c64564b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startedByPlayer: 1
+  enemyGradient: {fileID: 11400000, guid: f805ba8baecbec940809fc5406b71ae6, type: 2}
+  allyGradient: {fileID: 11400000, guid: 74579d22603024048a2a918d358e1f8a, type: 2}
   battleMenu: {fileID: 1024664522}
   damageText: {fileID: 484392334}
 --- !u!4 &977911958
@@ -1496,7 +1499,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0.8627451}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1832,6 +1835,14 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1498739222}
+    - target: {fileID: 1498739221, guid: 14e6ba0691c9adc418e43713bd9eb92d, type: 3}
+      propertyPath: healthFill
+      value: 
+      objectReference: {fileID: 1975140801}
+    - target: {fileID: 1498739221, guid: 14e6ba0691c9adc418e43713bd9eb92d, type: 3}
+      propertyPath: enemyGradient
+      value: 
+      objectReference: {fileID: 11400000, guid: 479a66fa4b094512a62b0a8e553ad95a, type: 2}
     - target: {fileID: 1498739221, guid: 14e6ba0691c9adc418e43713bd9eb92d, type: 3}
       propertyPath: GameController
       value: 
@@ -2589,7 +2600,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 0.8862745}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2744,21 +2755,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1970962201}
-  healthFill: {fileID: 0}
+  healthFill: {fileID: 1467554212}
   fighterName: 
-  energyFill: {fileID: 0}
-  health: 25
+  health: 60
   energy: 0
   attack: 10
   defense: 0.5
   special: 15
-  speed: 4
+  speed: 30
   experience: 0
   startHealth: 0
   startEnergy: 0
   nextActTurn: 0
-  healthTransform: {fileID: 0}
-  energyTransform: {fileID: 0}
   healthScale: {x: 0, y: 0}
   energyScale: {x: 0, y: 0}
   GameController: {fileID: 0}
@@ -3120,7 +3128,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 0.8627451}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
