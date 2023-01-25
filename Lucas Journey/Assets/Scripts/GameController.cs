@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,9 +15,11 @@ public class GameController : MonoBehaviour {
     private Grid grid;
     
     //Character Prefabs
-    public GridElement[] prefabs = new GridElement[1]; //Only 1 prefab for now
+    public GridElement[] prefabs = new GridElement[2]; //Only 1 prefab for now
 
     private GridElement[] players = new GridElement[1]; //Actual players, only 1 for now
+
+    private GridElement[] enemies = new GridElement[1];
 
     private GridElement[,] squares;
     private bool firstClick = true;
@@ -37,6 +40,9 @@ public class GameController : MonoBehaviour {
         //Move player around grid like this
         grid.MoveGridElementToXY(players[0], 2, 3);
 
+        enemies[0] = Instantiate(prefabs[1]);
+        grid.MoveGridElementToXY(enemies[0], 5, 5);
+
         //Example: How to access to player stats
         players[0].GetComponent<Character>().Health = 10;
     }
@@ -49,15 +55,14 @@ public class GameController : MonoBehaviour {
 
     private void RadiusTest() {
         if (!Input.GetMouseButtonDown(0)) return;
-        
+
         var pos = UtilsClass.GetMouseWorldPosition();
         int xx, yy;
         grid.GetXY(pos, out xx, out yy);
 
-        
-        
-        
+
         if (firstClick) {
+            if (IsEnemyThere(xx,yy)) return;
             if (grid.Characters[xx, yy] == null) return;
             selectedChar = grid.Characters[xx, yy];
             firstClick = false;
@@ -76,6 +81,8 @@ public class GameController : MonoBehaviour {
                             var color = grid.Characters[x,y]==null ? blueSquareColor : redSquareColor;
                             newSquare.GetComponent<SpriteRenderer>().material.color = color;
                             newSquare.transform.position = pointWorldPos;
+                            newSquare.X = x;
+                            newSquare.Y = y;
                             squares[x, y] = newSquare;
                         }
 
@@ -87,13 +94,28 @@ public class GameController : MonoBehaviour {
             }
         }
         else {
-            firstClick = true;
-
-            bool canMove = squares[xx, yy] != null;
-            if(grid.Characters[xx, yy] != null) return;
+            var canMove = squares[xx, yy] != null;
 
             if (canMove) {
-                grid.MoveGridElementToXY(selectedChar, xx, yy);
+                var clickedEnemy = GetEnemy(xx, yy);
+                if (clickedEnemy!=null) {
+                    
+                    if (!CheckIfCharacterIsInSurroundingSquares(clickedEnemy)) {
+                        var squareToMove = GetValidSquare(clickedEnemy);
+                        if (squareToMove!=null) {
+                            grid.MoveGridElementToXY(selectedChar, squareToMove.X, squareToMove.Y);    
+                        }
+                    }
+                    else {
+                        Debug.Log("Adjacent");
+                    }
+                    //Start attack
+
+
+                }
+                else {
+                    grid.MoveGridElementToXY(selectedChar, xx, yy);
+                }
             }
             
             selectedChar = null;
@@ -105,7 +127,79 @@ public class GameController : MonoBehaviour {
                     }
                 }
             }
+            firstClick = true;
         }
+    }
+
+    private bool CheckIfCharacterIsInSurroundingSquares(GridElement clickedEnemy) {
+        //Down
+        if (clickedEnemy.Y - 1 > 0) {
+            if (selectedChar.X == clickedEnemy.X && selectedChar.Y == clickedEnemy.Y-1) {
+                return true;
+            }
+        }
+
+        //Left
+        if (clickedEnemy.X -1 > 0) {
+            if (selectedChar.X == clickedEnemy.X-1 && selectedChar.Y == clickedEnemy.Y) {
+                return true;
+            }
+        }
+        
+        //Up
+        if (clickedEnemy.Y + 1 < gridHeight) {
+            if (selectedChar.X == clickedEnemy.X && selectedChar.Y == clickedEnemy.Y+1) {
+                return true;
+            }
+        }
+        
+        //Right
+        if (clickedEnemy.X + 1 < gridWidth) {
+            if (selectedChar.X == clickedEnemy.X+1 && selectedChar.Y == clickedEnemy.Y) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private GridElement GetValidSquare(GridElement enemy) {
+        //Check 4 directions of enemy 
+
+        //Down first
+        if (enemy.Y-1 > 0) {
+            var squareDown = squares[enemy.X, enemy.Y-1];
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+                return squareDown;
+            }
+        }
+        
+        //Left first
+        if (enemy.X-1 > 0) {
+            var squareDown = squares[enemy.X-1, enemy.Y];
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+                return squareDown;
+            }
+        }
+        
+        //Up first
+        if (enemy.Y+1 < gridHeight) {
+            var squareDown = squares[enemy.X, enemy.Y+1];
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+                Debug.Log("Up");
+                return squareDown;
+            }
+        }
+        
+        //Up first
+        if (enemy.X+1 < gridWidth) {
+            var squareDown = squares[enemy.X+1, enemy.Y];
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+                return squareDown;
+            }
+        }
+
+        return null;
     }
 
     private void ClickTest() {
@@ -120,14 +214,6 @@ public class GameController : MonoBehaviour {
                 if (t.X == x && t.Y == y) {
                     gridElement = t;
                 }
-            }
-
-            if (gridElement==null) {
-                Debug.Log("Nothing");
-            }
-            else {
-                Debug.Log(gridElement.X);
-                Debug.Log(gridElement.Y);
             }
         }
     }
@@ -149,5 +235,24 @@ public class GameController : MonoBehaviour {
                 dy = center.y - tile.y;
         float distance_squared = dx*dx + dy*dy;
         return distance_squared <= radius*radius;
+    }
+
+    private bool IsEnemyThere(int x, int y) {
+        return enemies.Any(t => t.X == x && t.Y == y);
+    }
+
+    private GridElement GetEnemy(int x, int y) {
+        return enemies.FirstOrDefault(gridElement => gridElement.X == x && gridElement.Y == y);
+    }
+
+    private GridElement GetSquare(int x, int y) {
+        for (var i = 0; i < gridHeight; i++) {
+            for (var j = 0; j < gridWidth; j++) {
+                if (squares[j,i]!=null && squares[j,i].X==x && squares[j,i].Y==y ) {
+                    return squares[i, j];
+                }
+            }
+        }
+        return null;
     }
 }
