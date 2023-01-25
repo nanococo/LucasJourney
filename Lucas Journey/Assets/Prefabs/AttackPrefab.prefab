@@ -47,6 +47,6 @@ MonoBehaviour:
   owner: {fileID: 0}
   animationName: Attacking
   minAttackMultiplier: 1.5
-  maxAttackMultiplier: 0.5
+  maxAttackMultiplier: 0.7
   minDefenseMultiplier: 1
   maxDefenseMultiplier: 1.5
