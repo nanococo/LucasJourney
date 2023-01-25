@@ -15,6 +15,9 @@ public class FighterStats : MonoBehaviour, IComparable
     [SerializeField]
     public TextMeshProUGUI healthFill;
 
+    [SerializeField]
+    public Image specialIndicator;
+
     public string fighterName;
 
 
@@ -28,6 +31,7 @@ public class FighterStats : MonoBehaviour, IComparable
     public float special;
     public float speed;
     public float experience;
+    public float specialCounter;
 
 
     public float startHealth;
@@ -57,13 +61,10 @@ public class FighterStats : MonoBehaviour, IComparable
 
         
     }
-    public void aumentar_health(float puntos)
-    {
-        health += puntos;
-       Debug.Log("Player health: " + health);
-       
 
-    }
+
+
+
     public void ReceiveDamage(float damage){
         health = health - damage;
         animator.Play("Hurt");
@@ -109,6 +110,27 @@ public class FighterStats : MonoBehaviour, IComparable
     
         healthFill.text = health.ToString();
     }
+
+    public void updateSpecialIndicator(){
+        switch(specialCounter){
+            case 0:
+                specialIndicator.color= new Color(0.1037736f, 0.1037736f, 0.1037736f);
+                break;
+            case 1:
+                specialIndicator.color= new Color(0.2960784f, 0.2960784f, 0.2960784f);
+                break;
+            case 2:
+                specialIndicator.color= new Color(0.4679245f, 0.4679245f, 0.4679245f);
+                break;
+            case 3:
+                specialIndicator.color= new Color(0.6849056f, 0.6849056f, 0.6849056f);
+                break;
+            case 4:
+                specialIndicator.color= new Color(1, 1, 1);
+                break;
+        }
+    }
+
     void continueGame(){
         GameObject.Find("CombatControllerObj").GetComponent<CombatController>().NextTurn();
     }

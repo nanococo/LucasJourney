@@ -49,6 +49,8 @@ public class AttackScript : MonoBehaviour
         attackerStats=owner.GetComponent<FighterStats>();
         targetStats=victim.GetComponent<FighterStats>();
         
+        attackerStats.specialCounter =0;
+        attackerStats.updateSpecialIndicator();
         
         float multiplier = Random.Range(minAttackMultiplier, maxAttackMultiplier);
         
@@ -65,7 +67,8 @@ public class AttackScript : MonoBehaviour
         attackerStats=owner.GetComponent<FighterStats>();
         targetStats=victim.GetComponent<FighterStats>();
         
-        
+        attackerStats.specialCounter =0;
+        attackerStats.updateSpecialIndicator();
         float multiplier = Random.Range(minAttackMultiplier, maxAttackMultiplier);
         
         damage=multiplier*attackerStats.attack; // guardbreak damage
@@ -79,6 +82,8 @@ public class AttackScript : MonoBehaviour
 
     public void heal()
     {
+        attackerStats.specialCounter =0;
+        attackerStats.updateSpecialIndicator();
         attackerStats=owner.GetComponent<FighterStats>();
         owner.GetComponent<FighterStats>().updateHealth();
         owner.GetComponent<Animator>().Play("Heal");

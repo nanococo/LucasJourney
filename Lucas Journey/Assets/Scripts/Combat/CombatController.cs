@@ -17,6 +17,8 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private GameObject battleMenu;
     [SerializeField]
+    private GameObject specialMenu;
+    [SerializeField]
     public TextMeshProUGUI damageText;
     
 
@@ -38,11 +40,16 @@ public class CombatController : MonoBehaviour
         if (startedByPlayer){
             fighterStats.Add(currentFighterStats);
             fighterStats.Add(currentEnemyStats);
-            fighterStats.Add(currentFighterStats);
+            if(currentFighterStats.speed>currentEnemyStats.speed){
+                fighterStats.Add(currentFighterStats);
+            }
+            
         }else{
             fighterStats.Add(currentEnemyStats);
             fighterStats.Add(currentFighterStats);
-            fighterStats.Add(currentEnemyStats);
+            if(currentFighterStats.speed<currentEnemyStats.speed){
+                fighterStats.Add(currentEnemyStats);
+            }
         }
         
         
@@ -50,7 +57,25 @@ public class CombatController : MonoBehaviour
         NextTurn();
 
     }
-    
+    public void turnoffMenu(){
+        this.battleMenu.SetActive(false);
+    }
+
+    public void turnSpecials(bool state){
+        foreach (Transform child in specialMenu.transform){
+            child.gameObject.GetComponent<Button>().interactable =state;
+        }
+        
+    }
+
+    public void increaseSpecialCounter(FighterStats currstats){
+        
+        currstats.specialCounter+=1;
+        if(currstats.specialCounter>4){
+            currstats.specialCounter=4;
+        }
+        currstats.updateSpecialIndicator();
+    }
 
     public void checkRemainingEnemies(){
 
@@ -82,13 +107,39 @@ public class CombatController : MonoBehaviour
             FighterStats currentFighterStats = fighterStats[0];
             fighterStats.Remove(currentFighterStats);
             if(currentFighterStats.GetDead()){
+                increaseSpecialCounter(currentFighterStats);
                 GameObject  currentUnit = currentFighterStats.gameObject;
                 if(currentUnit.tag=="Ally"){
+                    
+
                     this.battleMenu.SetActive(true);
+                    if(currentFighterStats.specialCounter>=4){
+                        turnSpecials(true);
+                    }else{
+                        turnSpecials(false);
+                    }
 
                 }else{
                     this.battleMenu.SetActive(false);
-                    string attackType= Random.Range(0,2)==1?"melee":"melee";
+                    string attackType="melee";
+                    if(currentFighterStats.specialCounter>=4){
+                        switch(Random.Range(0,4)){
+                            case 0:
+                                attackType="melee";
+                                break;
+                            case 1:
+                                attackType="double";
+                                break;
+                            
+                            case 2:
+                                attackType="heal";
+                                break;
+                            case 3:
+                                attackType="guard";
+                                break;
+                        }
+                    }
+                    
                     currentUnit.GetComponent<FighterAction>().SelectAttack(attackType);
                 }
             }else{

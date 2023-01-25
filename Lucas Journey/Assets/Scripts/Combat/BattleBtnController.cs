@@ -19,27 +19,14 @@ public class BattleBtnController : MonoBehaviour
         Hero = GameObject.FindGameObjectWithTag("Ally");
     }
 
-    void turnOnIndicators(bool indicatorState){
-        GameObject uiPanel = transform.parent.parent.parent.gameObject;
-         
-        Transform currentIndicator =uiPanel.transform.Find("EnemyInfo1/EnemyInfo(Clone)/Indicator");
-
-        if(currentIndicator!=null){
-            currentIndicator.gameObject.SetActive(indicatorState);
-        }
-        currentIndicator =uiPanel.transform.Find("EnemyInfo2/EnemyInfo(Clone)/Indicator");
-        if(currentIndicator!=null){
-            currentIndicator.gameObject.SetActive(indicatorState);
-        }
-        currentIndicator =uiPanel.transform.Find("EnemyInfo3/EnemyInfo(Clone)/Indicator");
-        if(currentIndicator!=null){
-            currentIndicator.gameObject.SetActive(indicatorState);
-        }
+    void turnOffIndicator(){
+        GameController.GetComponent<CombatController>().turnoffMenu();
     }
 
 
     // Update is called once per frame
     private void AttachCallback(string btn, GameObject btnPressed){
+        turnOffIndicator();
             if(btn.CompareTo("AttackBtn")== 0){
                 Hero.GetComponent<FighterAction>().SelectAttack("melee");
 
