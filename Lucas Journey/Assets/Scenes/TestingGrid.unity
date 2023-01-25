@@ -242,6 +242,8 @@ MonoBehaviour:
   prefabs:
   - {fileID: 6972042235683441773, guid: 4cd8a872a5cb89e4bbe5fefc32629257, type: 3}
   square: {fileID: 5776360823198830302, guid: 913464d4d3936ff4bb06b9f347ce1f7b, type: 3}
+  redSquareColor: {r: 0.6603774, g: 0.3395337, b: 0.3395337, a: 1}
+  blueSquareColor: {r: 0.3411765, g: 0.408549, b: 0.6588235, a: 1}
 --- !u!4 &991196627
 Transform:
   m_ObjectHideFlags: 0
