@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour {
-    
+
     //Grid parameters
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
@@ -170,7 +168,6 @@ public class GameController : MonoBehaviour {
                     if (grid.Characters[xx, yy] == null && grid.unWalkableGrid[xx,yy]==false) {
                         grid.MoveGridElementToXY(selectedChar, xx, yy);
                     }
-
                 }
             }
             
@@ -332,7 +329,8 @@ public class GameController : MonoBehaviour {
         pathfinding = new Pathfinding(grid);
         var path = pathfinding.FindPath(origin.X, origin.Y, target.X, target.Y);
         for (var i = 0; i < path.Count-1; i++) {
-            grid.MoveGridElementToXY(origin, path[i].x, path[i].y);    
+            if (i>=2) break; //Limit movement to two squares
+            grid.MoveGridElementToXY(origin, path[i].x, path[i].y);
         }
 
         if (GetDistance(target, origin) <= 1.0f) {
