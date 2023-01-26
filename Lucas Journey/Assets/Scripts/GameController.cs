@@ -310,7 +310,34 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
-    private void EnemyMoveOnTurn() {
-        
+    public GridElement GetClosestTarget(GridElement origin) {
+        var minDistance = float.MinValue;
+        GridElement closestPlayer = null;
+        foreach (var player in players) {
+            if (player == null) continue;
+            if (!player.GetComponent<Character>().isAlive) continue;
+
+            var distance = GetDistance(player, origin);
+            if (!(distance < minDistance)) continue;
+            
+            minDistance = distance;
+            closestPlayer = player;
+        }
+
+        return closestPlayer;
+    }
+    private void EnemyMoveOnTurn(GridElement target, GridElement origin) {
+        var path = pathfinding.FindPath(origin.X, origin.Y, target.X, target.Y);
+        for (var i = 0; i < path.Count-1; i++) {
+            grid.MoveGridElementToXY(origin, path[i].x, path[i].y);    
+        }
+
+        if (GetDistance(target, origin) <= 1.0f) {
+            //trigger battle
+        }
+    }
+
+    private float GetDistance(GridElement target, GridElement origin) {
+        return Mathf.Pow(Mathf.Pow(target.X - origin.X, 2) + Mathf.Pow(target.Y - origin.Y, 2), 1 / 2f);
     }
 }
