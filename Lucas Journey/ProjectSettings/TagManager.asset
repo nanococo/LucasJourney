@@ -49,3 +49,6 @@ TagManager:
   - name: CombatLayer
     uniqueID: 1257052653
     locked: 0
+  - name: UI
+    uniqueID: 2733798005
+    locked: 0

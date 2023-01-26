@@ -84,7 +84,7 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-         if (Input.GetButtonDown("Fire2"))
+         if (Input.GetButtonDown("Fire2") && !BattleController.inBattle)
             fixturn();
         if(AllyTurn){
 

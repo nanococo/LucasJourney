@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LosingCanvas Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 404618899753956731, guid: 6d32c92c0f32a484cb1b613d80fb5cf2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1394421963280991511, guid: 6d32c92c0f32a484cb1b613d80fb5cf2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -146,6 +150,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: TestingGridBattles3
       objectReference: {fileID: 0}
+    - target: {fileID: 5534701524275851936, guid: 6d32c92c0f32a484cb1b613d80fb5cf2, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 7617145854812941490}
     - target: {fileID: 7155169599371788437, guid: 6d32c92c0f32a484cb1b613d80fb5cf2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -490,6 +498,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1033073985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1033073988}
+  - component: {fileID: 1033073987}
+  - component: {fileID: 1033073986}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1033073986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033073985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1033073987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033073985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1033073988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033073985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1198334118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -497,6 +573,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7299436466288824836, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 7617145854812941490}
     - target: {fileID: 7299436466288824837, guid: 26460373a16574e45b885b80360cec8a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -584,6 +664,14 @@ PrefabInstance:
     - target: {fileID: 7299436466288824857, guid: 26460373a16574e45b885b80360cec8a, type: 3}
       propertyPath: m_Name
       value: Fix
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299436466288824857, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299436467134825323, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -41.30002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26460373a16574e45b885b80360cec8a, type: 3}
@@ -682,6 +770,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 190556572516704704, guid: cff53180ed8b9f243a6da43108841340, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 7617145854812941490}
     - target: {fileID: 3253726831639385077, guid: cff53180ed8b9f243a6da43108841340, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -774,14 +866,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 268841134}
-    - target: {fileID: 6715483750280648311, guid: cff53180ed8b9f243a6da43108841340, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 6715483750280648311, guid: cff53180ed8b9f243a6da43108841340, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Dialogue4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cff53180ed8b9f243a6da43108841340, type: 3}
 --- !u!1 &1883991345 stripped
@@ -846,3 +930,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a62a3fe216a43c34986ba05ddbe0b567, type: 3}
+--- !u!20 &7617145854812941490 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7617145855677242500, guid: a62a3fe216a43c34986ba05ddbe0b567, type: 3}
+  m_PrefabInstance: {fileID: 7617145854812941489}
+  m_PrefabAsset: {fileID: 0}

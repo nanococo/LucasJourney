@@ -130,6 +130,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 190556572516704704, guid: cff53180ed8b9f243a6da43108841340, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 7617145854812941490}
+    - target: {fileID: 190556572516704704, guid: cff53180ed8b9f243a6da43108841340, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 190556572516704704, guid: cff53180ed8b9f243a6da43108841340, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1561169291
+      objectReference: {fileID: 0}
     - target: {fileID: 1967580636146002165, guid: cff53180ed8b9f243a6da43108841340, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -161.3
@@ -284,15 +296,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9202329929830481960, guid: cff53180ed8b9f243a6da43108841340, type: 3}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9202329929830481960, guid: cff53180ed8b9f243a6da43108841340, type: 3}
       propertyPath: m_ReferenceResolution.x
-      value: 1920
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 9202329929830481960, guid: cff53180ed8b9f243a6da43108841340, type: 3}
       propertyPath: m_ReferenceResolution.y
-      value: 1800
+      value: 900
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cff53180ed8b9f243a6da43108841340, type: 3}
@@ -695,3 +707,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a62a3fe216a43c34986ba05ddbe0b567, type: 3}
+--- !u!20 &7617145854812941490 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7617145855677242500, guid: a62a3fe216a43c34986ba05ddbe0b567, type: 3}
+  m_PrefabInstance: {fileID: 7617145854812941489}
+  m_PrefabAsset: {fileID: 0}
