@@ -242,6 +242,16 @@ MonoBehaviour:
   prefabs:
   - {fileID: 6972042235683441773, guid: 4cd8a872a5cb89e4bbe5fefc32629257, type: 3}
   - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
+  - {fileID: -6487680363882885678, guid: fe97d4d6fbe120546916ae7f43af6866, type: 3}
+  playersPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  lucasLocation: {x: 0, y: 0}
+  lotharLocation: {x: 0, y: 0}
+  joanLocation: {x: 0, y: 0}
+  enemiesLocations:
+  - {x: 0, y: 0}
   square: {fileID: 5776360823198830302, guid: 913464d4d3936ff4bb06b9f347ce1f7b, type: 3}
   redSquareColor: {r: 0.6603774, g: 0.3395337, b: 0.3395337, a: 1}
   blueSquareColor: {r: 0.3411765, g: 0.408549, b: 0.6588235, a: 1}

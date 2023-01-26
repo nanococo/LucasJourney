@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour {
     
@@ -15,11 +17,18 @@ public class GameController : MonoBehaviour {
     private Grid grid;
     
     //Character Prefabs
-    public GridElement[] prefabs = new GridElement[2]; //Only 1 prefab for now
+    public GridElement[] prefabs = new GridElement[3]; //Only 1 prefab for now
 
-    private GridElement[] players = new GridElement[1]; //Actual players, only 1 for now
+    private GridElement[] players = new GridElement[2]; //Actual players, only 1 for now
 
     private GridElement[] enemies = new GridElement[1];
+
+    public GridElement[] playersPrefabs = new GridElement[3];
+    public Vector2 lucasLocation;
+    public Vector2 lotharLocation;
+    public Vector2 joanLocation;
+
+    public Vector2[] enemiesLocations;
 
     private GridElement[,] squares;
     private bool firstClick = true;
@@ -29,28 +38,74 @@ public class GameController : MonoBehaviour {
     public GridElement square;
     public Color redSquareColor = new Color(0.6603774f, 0.3395337f, 0.3395337f);
     public Color blueSquareColor = new Color(0.3411765f, 0.408549f, 0.6588235f);
+    
+    //PathFinding
+    private Pathfinding pathfinding;
 
     private void Start() {
         grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(0, 0));
         squares = new GridElement[gridWidth, gridHeight];
         
+        
+        //Lucas
         //Add instantiate to loop to add more players 
         players[0] = Instantiate(prefabs[0]);
+        grid.MoveGridElementToXY(players[0], 2, 3);
+        
+        
+        
 
         //Move player around grid like this
-        grid.MoveGridElementToXY(players[0], 2, 3);
+        
+        
+        //Add instantiate to loop to add more players 
+        players[1] = Instantiate(prefabs[2]);
+
+        //Move player around grid like this
+        grid.MoveGridElementToXY(players[1], 4, 5);
 
         enemies[0] = Instantiate(prefabs[1]);
         grid.MoveGridElementToXY(enemies[0], 5, 5);
 
         //Example: How to access to player stats
         players[0].GetComponent<Character>().Health = 10;
+        
+        pathfinding = new Pathfinding(grid);
     }
 
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-        RadiusTest();
+        //RadiusTest();
+        PathfindingTest();
+    }
+
+    private void PathfindingTest() {
+        if (!Input.GetMouseButtonDown(0)) return;
+        
+        var pos = UtilsClass.GetMouseWorldPosition();
+        int xx, yy;
+        grid.GetXY(pos, out xx, out yy);
+        if (firstClick) {
+            if (grid.Characters[xx, yy] == null) return;
+            
+            selectedChar = grid.Characters[xx, yy];
+            firstClick = false;
+        }
+        else {
+            var mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+            grid.GetXY(mouseWorldPosition, out int x, out int y);
+            List<PathNode> path = pathfinding.FindPath(selectedChar.X, selectedChar.Y, x, y);
+            if (path != null) {
+                foreach (var pathNode in path) {
+                    Debug.Log(pathNode.x);
+                    Debug.Log(pathNode.y);
+                }
+            }
+            else {
+                Debug.Log("Path is null");
+            }
+        }
     }
 
     private void RadiusTest() {

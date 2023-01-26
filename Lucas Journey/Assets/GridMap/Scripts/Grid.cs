@@ -28,6 +28,8 @@ public class Grid {
     
     private int[,] gridArray;
 
+    private bool[,] walkableGrid;
+
     public GridElement[,] Characters;
     
 
@@ -39,6 +41,7 @@ public class Grid {
 
         gridArray = new int[width, height];
         Characters = new GridElement[width, height];
+        walkableGrid = new bool[width, height];
 
         bool showDebug = true;
         if (showDebug) {
