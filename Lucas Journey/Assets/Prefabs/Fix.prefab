@@ -167,7 +167,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press S to skip turn (or stucked)
+  m_text: 'Presiona S para saltar tu turno (o si un jugador queda aturdido)
+
+    Presiona
+    R para reiniciar el nivel'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4abf1f046593e574d8b1ffe1980c91bc, type: 2}
   m_sharedMaterial: {fileID: 1352751279744416209, guid: 4abf1f046593e574d8b1ffe1980c91bc, type: 2}
@@ -230,7 +233,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -42.33693, z: -300.68063, w: 0}
+  m_margin: {x: 0, y: -68.32855, z: -300.68063, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -121,8 +121,8 @@ MonoBehaviour:
   StartHealth: 27
   Health: 27
   Speed: 35
-  Defense: 0.5
-  Attack: 24
+  Defense: 0.4
+  Attack: 20
   SpecialCounter: 0
   isAlive: 1
   battlePrefab: {fileID: 5565702650687556749, guid: f32895ff8f289984d8a69109db7182ce, type: 3}

@@ -4,6 +4,7 @@ using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -86,6 +87,11 @@ public class GameController : MonoBehaviour {
         //ClickTest();
          if (Input.GetButtonDown("Fire2") && !BattleController.inBattle)
             fixturn();
+        if(Input.GetButtonDown("Fire3") && !BattleController.inBattle){ 
+            BattleController.inBattle = false;
+            SceneLoader.LoadScene(SceneManager.GetActiveScene().name);
+
+        }    
         if(AllyTurn){
 
         
