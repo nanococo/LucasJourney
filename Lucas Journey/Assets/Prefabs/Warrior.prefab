@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2263485006083433940}
   m_Layer: 0
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,4 +124,5 @@ MonoBehaviour:
   Defense: 0.1
   Attack: 11
   SpecialCounter: 0
+  isAlive: 1
   battlePrefab: {fileID: 2423017855031825068, guid: e34a2444cd640d049b94d3b7143bff83, type: 3}

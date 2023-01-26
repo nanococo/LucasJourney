@@ -41,6 +41,7 @@ public class BattleController : MonoBehaviour
     //public void StartBattle(GameObject startingEnemy){
     public void StartBattle(GameObject starting, GameObject victim, Grid gridParameter){
         //currEnemy = startingEnemy;
+        inBattle=true;
         gridInstance = gridParameter; 
         if(starting.GetComponent<Character>().battlePrefab.tag == "Ally"){
             currAlly = starting.GetComponent<Character>().battlePrefab;
@@ -133,7 +134,7 @@ public class BattleController : MonoBehaviour
 
         }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Combat"));
-        
+        GameObject.Find("CombatControllerObj").GetComponent<CombatController>().startedByPlayer=startedByAlly;
         //
         setFighter(true, currAlly);
         setFighter(false, currEnemy);

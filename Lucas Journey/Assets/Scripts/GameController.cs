@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class GameController : MonoBehaviour {
 
@@ -30,6 +31,9 @@ public class GameController : MonoBehaviour {
     private GridElement[,] squares;
     private bool firstClick = true;
     private GridElement selectedChar;
+
+    bool AllyTurn;
+    bool EnemyIsMoving;
     
     //Square Prefab
     public GridElement square;
@@ -43,6 +47,7 @@ public class GameController : MonoBehaviour {
     public Vector2[] unWalkablePositions;
 
     private void Start() {
+        AllyTurn=true;
 
         battleControllerObj = GameObject.Find("BattleControllerObj").GetComponent<BattleController>();
 
@@ -75,10 +80,42 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-        RadiusTest();
+        if(AllyTurn){
+
+        
+            RadiusTest();
+        }else if(!EnemyIsMoving){
+            EnemyIsMoving=true;
+            enemyTurn();
+        }
         //PathfindingTest();
     }
+    public void enemyTurn(){
+        foreach(GridElement currEnemy in enemies){
+            if (currEnemy==null) continue;
+            GridElement currAlly =  GetClosestTarget(currEnemy);
+            EnemyMoveOnTurn(currAlly, currEnemy );
+        }
+        AllyTurn=true;
+        GameObject[] allies = GameObject.FindGameObjectsWithTag("PlayerStill");
 
+        foreach(GameObject aliado in allies){
+            aliado.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f);
+            aliado.tag = "Player";
+        }
+    }
+
+    public void TurnUsed(GridElement selectedChar){
+        selectedChar.GetComponent<SpriteRenderer>().color = new Color(0.4f,0.4f,0.4f);
+        selectedChar.tag = "PlayerStill";
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Player");
+        if(enemies.Length<=0){
+            //Change turn
+            AllyTurn = false;
+            Debug.Log("Change Turn");
+            EnemyIsMoving=false;
+        }
+    }
     private void PathfindingTest() {
         if (!Input.GetMouseButtonDown(0)) return;
         
@@ -119,6 +156,7 @@ public class GameController : MonoBehaviour {
             if (IsEnemyThere(xx,yy)) return;
             if (grid.Characters[xx, yy] == null) return;
             selectedChar = grid.Characters[xx, yy];
+            if (selectedChar.tag.CompareTo("PlayerStill")==0) return;
             firstClick = false;
 
             //var mousePos = grid.GetWorldPosition(xx, yy) + new Vector3(cellSize, cellSize) * .5f;
@@ -162,11 +200,13 @@ public class GameController : MonoBehaviour {
                     }
                     //Start attack
                     battleControllerObj.StartBattle(selectedChar.gameObject, clickedEnemy.gameObject, grid);
+                    TurnUsed(selectedChar);
 
                 }
                 else {
                     if (grid.Characters[xx, yy] == null && grid.unWalkableGrid[xx,yy]==false) {
                         grid.MoveGridElementToXY(selectedChar, xx, yy);
+                        TurnUsed(selectedChar);
                     }
                 }
             }
@@ -333,9 +373,29 @@ public class GameController : MonoBehaviour {
             grid.MoveGridElementToXY(origin, path[i].x, path[i].y);
         }
 
-        if (GetDistance(target, origin) <= 1.0f) {
-            //trigger battle
+        if (GetDistance(target, origin) <= 1.5f) {
+            Debug.Log("INBATTLE????? "  + BattleController.inBattle);
+            StartCoroutine(waitforBattle(origin.gameObject,target.gameObject));
+
+            
         }
+    }
+
+    public IEnumerator waitforBattle(GameObject origin, GameObject target){
+        
+
+        while (BattleController.inBattle)
+        
+        {
+            Debug.Log("AAAAAAAAAAAANOOOOOOOOOOOOOOOO");
+            yield return null;
+
+        }
+        BattleController.inBattle=true;
+        yield return new WaitForSeconds(2);
+        battleControllerObj.StartBattle(origin, target, grid);
+
+        
     }
 
     private float GetDistance(GridElement target, GridElement origin) {
