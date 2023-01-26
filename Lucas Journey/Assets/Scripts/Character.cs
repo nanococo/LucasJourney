@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;  
+﻿using UnityEngine;  
 
 public class Character : GridElement {
 
@@ -9,6 +8,7 @@ public class Character : GridElement {
     public float Defense;
     public float Attack;
     public float SpecialCounter;
+    public bool isAlive = true;
 
     public GameObject battlePrefab;
 
