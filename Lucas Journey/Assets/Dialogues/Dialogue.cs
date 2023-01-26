@@ -12,7 +12,7 @@ public class Dialogue : MonoBehaviour
     private bool didDialogueStart; //Si dialogo comenzo
     private int lineIndex;
 
-
+    public string NextScene;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField, TextArea(4,6)] private string[] dialogueLines;
@@ -81,7 +81,7 @@ public class Dialogue : MonoBehaviour
             didDialogueStart = false;
             dialoguePanel.SetActive(false);
             Time.timeScale = 1f;
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(NextScene);
         }
     }
     private IEnumerator ShowLine()
