@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d8c93826ae6a6a647a510c7d28fb5207, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c6ac7b0e57a5fa4296cc9a5b5c4f33e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -247,76 +247,50 @@ MonoBehaviour:
   playersLocations:
   - {x: 2, y: 3}
   - {x: 2, y: 2}
-  - {x: 3, y: 1}
+  - {x: 1, y: 1}
   enemiesPrefabs:
-  - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
-  - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
-  - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
-  - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
+  - {fileID: 4828148304471446381, guid: 4d0cec74b9160174480f83f9391249a8, type: 3}
+  - {fileID: 4701650800350267575, guid: 5dce144ebeb053d4d95473f3cd6bfe59, type: 3}
+  - {fileID: 4701650800350267575, guid: 5dce144ebeb053d4d95473f3cd6bfe59, type: 3}
+  - {fileID: 1784056939303790248, guid: 46e633ab5df3063458432a34559afcb8, type: 3}
   enemiesLocations:
-  - {x: 17, y: 8}
-  - {x: 16, y: 7}
-  - {x: 13, y: 7}
-  - {x: 13, y: 6}
+  - {x: 17, y: 6}
+  - {x: 14, y: 8}
+  - {x: 15, y: 7}
+  - {x: 11, y: 4}
   square: {fileID: 5776360823198830302, guid: 913464d4d3936ff4bb06b9f347ce1f7b, type: 3}
   redSquareColor: {r: 0.6603774, g: 0.3395337, b: 0.3395337, a: 1}
   blueSquareColor: {r: 0.3411765, g: 0.408549, b: 0.6588235, a: 1}
   unWalkablePositions:
-  - {x: 0, y: 4}
-  - {x: 0, y: 5}
-  - {x: 0, y: 6}
-  - {x: 1, y: 4}
-  - {x: 1, y: 5}
-  - {x: 1, y: 6}
-  - {x: 2, y: 4}
-  - {x: 2, y: 5}
-  - {x: 2, y: 6}
-  - {x: 3, y: 4}
-  - {x: 3, y: 5}
-  - {x: 3, y: 6}
-  - {x: 4, y: 4}
-  - {x: 4, y: 5}
-  - {x: 4, y: 6}
-  - {x: 4, y: 7}
-  - {x: 4, y: 8}
-  - {x: 4, y: 9}
-  - {x: 5, y: 7}
-  - {x: 5, y: 8}
-  - {x: 5, y: 9}
-  - {x: 6, y: 7}
-  - {x: 6, y: 8}
-  - {x: 6, y: 9}
-  - {x: 7, y: 7}
-  - {x: 7, y: 8}
-  - {x: 7, y: 9}
-  - {x: 8, y: 7}
-  - {x: 8, y: 8}
-  - {x: 8, y: 9}
-  - {x: 9, y: 7}
-  - {x: 9, y: 8}
-  - {x: 9, y: 9}
-  - {x: 10, y: 7}
-  - {x: 10, y: 8}
-  - {x: 10, y: 9}
-  - {x: 9, y: 10}
-  - {x: 10, y: 10}
-  - {x: 11, y: 10}
-  - {x: 14, y: 4}
-  - {x: 15, y: 4}
-  - {x: 16, y: 4}
-  - {x: 17, y: 4}
+  - {x: 6, y: 0}
   - {x: 7, y: 0}
   - {x: 8, y: 0}
   - {x: 9, y: 0}
   - {x: 10, y: 0}
-  - {x: 7, y: 1}
-  - {x: 8, y: 1}
-  - {x: 9, y: 1}
-  - {x: 10, y: 1}
-  - {x: 7, y: 2}
-  - {x: 8, y: 2}
-  - {x: 9, y: 2}
-  - {x: 10, y: 2}
+  - {x: 11, y: 0}
+  - {x: 0, y: 10}
+  - {x: 0, y: 9}
+  - {x: 0, y: 8}
+  - {x: 1, y: 10}
+  - {x: 1, y: 9}
+  - {x: 1, y: 8}
+  - {x: 2, y: 10}
+  - {x: 3, y: 10}
+  - {x: 4, y: 10}
+  - {x: 5, y: 10}
+  - {x: 6, y: 10}
+  - {x: 7, y: 10}
+  - {x: 8, y: 10}
+  - {x: 9, y: 10}
+  - {x: 10, y: 10}
+  - {x: 11, y: 10}
+  - {x: 12, y: 10}
+  - {x: 18, y: 10}
+  - {x: 17, y: 10}
+  - {x: 18, y: 9}
+  - {x: 17, y: 9}
+  - {x: 18, y: 8}
+  - {x: 17, y: 8}
 --- !u!4 &991196627
 Transform:
   m_ObjectHideFlags: 0

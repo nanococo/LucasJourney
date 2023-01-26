@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour {
         
         //Start Enemies
         for (var i = 0; i < enemiesLocations.Length; i++) {
-            enemies[i] = Instantiate(enemiesPrefabs[0]);
+            enemies[i] = Instantiate(enemiesPrefabs[i]);
             grid.MoveGridElementToXY(enemies[i], (int) enemiesLocations[i].x, (int) enemiesLocations[i].y);
         }
         
