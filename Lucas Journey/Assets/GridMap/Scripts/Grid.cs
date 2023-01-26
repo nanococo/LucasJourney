@@ -10,16 +10,9 @@
     --------------------------------------------------
  */
 
-using System;
 using UnityEngine;
 
 public class Grid {
-
-    public event EventHandler<OnGridValueChangedEventArgs> OnGridValueChanged;
-    public class OnGridValueChangedEventArgs : EventArgs {
-        public int x;
-        public int y;
-    }
 
     private int width;
     private int height;
@@ -28,7 +21,7 @@ public class Grid {
     
     private int[,] gridArray;
 
-    private bool[,] walkableGrid;
+    public bool[,] unWalkableGrid;
 
     public GridElement[,] Characters;
     
@@ -41,22 +34,21 @@ public class Grid {
 
         gridArray = new int[width, height];
         Characters = new GridElement[width, height];
-        walkableGrid = new bool[width, height];
+        unWalkableGrid = new bool[width, height];
+        
+        
 
-        bool showDebug = true;
-        if (showDebug) {
-            
-
-            for (int x = 0; x < gridArray.GetLength(0); x++) {
-                for (int y = 0; y < gridArray.GetLength(1); y++) {
-                    //debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 30, Color.white, TextAnchor.MiddleCenter);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
-                }
+        for (int x = 0; x < gridArray.GetLength(0); x++) {
+            for (int y = 0; y < gridArray.GetLength(1); y++) {
+                unWalkableGrid[x, y] = false;
+                //debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 30, Color.white, TextAnchor.MiddleCenter);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
         }
+        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
+        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        
     }
 
     public int GetWidth() {
@@ -79,20 +71,7 @@ public class Grid {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
-
-    public void SetValue(int x, int y, int value) {
-        if (x >= 0 && y >= 0 && x < width && y < height) {
-            gridArray[x, y] = value;
-            if (OnGridValueChanged != null) OnGridValueChanged(this, new OnGridValueChangedEventArgs { x = x, y = y });
-        }
-    }
-
-    public void SetValue(Vector3 worldPosition, int value) {
-        int x, y;
-        GetXY(worldPosition, out x, out y);
-        SetValue(x, y, value);
-    }
-
+    
     public int GetValue(int x, int y) {
         if (x >= 0 && y >= 0 && x < width && y < height) {
             return gridArray[x, y];

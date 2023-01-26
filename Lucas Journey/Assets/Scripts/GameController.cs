@@ -40,6 +40,9 @@ public class GameController : MonoBehaviour {
     
     //PathFinding
     private Pathfinding pathfinding;
+    
+    //Un-Walkable Spaces
+    public Vector2[] unWalkablePositions;
 
     private void Start() {
 
@@ -61,6 +64,11 @@ public class GameController : MonoBehaviour {
         for (var i = 0; i < enemiesLocations.Length; i++) {
             enemies[i] = Instantiate(enemiesPrefabs[0]);
             grid.MoveGridElementToXY(enemies[i], (int) enemiesLocations[i].x, (int) enemiesLocations[i].y);
+        }
+        
+        //Set UnWalkable Spaces
+        foreach (var unWalkablePosition in unWalkablePositions) {
+            grid.unWalkableGrid[(int) unWalkablePosition.x, (int) unWalkablePosition.y] = true;
         }
 
         pathfinding = new Pathfinding(grid);
@@ -119,14 +127,14 @@ public class GameController : MonoBehaviour {
             
             var worldPosCenterMouse = grid.GetWorldPosition(xx, yy) + new Vector3(cellSize, cellSize) * .5f;
             
-            
             for (int y = 0; y < gridHeight; y++) {
                 for (int x = 0; x < gridWidth; x++) {
                     var pointWorldPos = grid.GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f;
                     if (Inside_circle(worldPosCenterMouse, pointWorldPos, 2)) {
                         if (squares[x,y]==null) {
                             var newSquare = Instantiate(square);
-                            var color = grid.Characters[x,y]==null ? blueSquareColor : redSquareColor;
+                            var color = grid.Characters[x,y]==null && grid.unWalkableGrid[x,y]==false ? blueSquareColor : redSquareColor;
+
                             newSquare.GetComponent<SpriteRenderer>().material.color = color;
                             newSquare.transform.position = pointWorldPos;
                             newSquare.X = x;
@@ -154,17 +162,12 @@ public class GameController : MonoBehaviour {
                             grid.MoveGridElementToXY(selectedChar, squareToMove.X, squareToMove.Y);    
                         }
                     }
-                    else {
-                        //Testing Trigger
-                        
-                        Debug.Log("Adjacent");
-                    }
                     //Start attack
                     battleControllerObj.StartBattle(selectedChar.gameObject, clickedEnemy.gameObject, grid);
 
                 }
                 else {
-                    if (grid.Characters[xx, yy] == null) {
+                    if (grid.Characters[xx, yy] == null && grid.unWalkableGrid[xx,yy]==false) {
                         grid.MoveGridElementToXY(selectedChar, xx, yy);
                     }
 
@@ -223,7 +226,7 @@ public class GameController : MonoBehaviour {
         //Down first
         if (enemy.Y-1 > 0) {
             var squareDown = squares[enemy.X, enemy.Y-1];
-            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null && grid.unWalkableGrid[enemy.X, enemy.Y-1] == false) {
                 return squareDown;
             }
         }
@@ -231,7 +234,7 @@ public class GameController : MonoBehaviour {
         //Left first
         if (enemy.X-1 > 0) {
             var squareDown = squares[enemy.X-1, enemy.Y];
-            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null && grid.unWalkableGrid[enemy.X-1, enemy.Y] == false) {
                 return squareDown;
             }
         }
@@ -239,8 +242,7 @@ public class GameController : MonoBehaviour {
         //Up first
         if (enemy.Y+1 < gridHeight) {
             var squareDown = squares[enemy.X, enemy.Y+1];
-            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
-                Debug.Log("Up");
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null && grid.unWalkableGrid[enemy.X, enemy.Y+1] == false) {
                 return squareDown;
             }
         }
@@ -248,7 +250,7 @@ public class GameController : MonoBehaviour {
         //Up first
         if (enemy.X+1 < gridWidth) {
             var squareDown = squares[enemy.X+1, enemy.Y];
-            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null) {
+            if (squareDown != null && grid.Characters[squareDown.X, squareDown.Y]==null && grid.unWalkableGrid[enemy.X+1, enemy.Y] == false) {
                 return squareDown;
             }
         }
@@ -310,7 +312,35 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
-    private void EnemyMoveOnTurn() {
-        
+    public GridElement GetClosestTarget(GridElement origin) {
+        var minDistance = float.MinValue;
+        GridElement closestPlayer = null;
+        foreach (var player in players) {
+            if (player == null) continue;
+            if (!player.GetComponent<Character>().isAlive) continue;
+
+            var distance = GetDistance(player, origin);
+            if (!(distance < minDistance)) continue;
+            
+            minDistance = distance;
+            closestPlayer = player;
+        }
+
+        return closestPlayer;
+    }
+    private void EnemyMoveOnTurn(GridElement target, GridElement origin) {
+        pathfinding = new Pathfinding(grid);
+        var path = pathfinding.FindPath(origin.X, origin.Y, target.X, target.Y);
+        for (var i = 0; i < path.Count-1; i++) {
+            grid.MoveGridElementToXY(origin, path[i].x, path[i].y);    
+        }
+
+        if (GetDistance(target, origin) <= 1.0f) {
+            //trigger battle
+        }
+    }
+
+    private float GetDistance(GridElement target, GridElement origin) {
+        return Mathf.Pow(Mathf.Pow(target.X - origin.X, 2) + Mathf.Pow(target.Y - origin.Y, 2), 1 / 2f);
     }
 }
