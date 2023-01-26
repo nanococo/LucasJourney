@@ -310,7 +310,7 @@ public class GameController : MonoBehaviour {
     }
 
     public GridElement GetClosestTarget(GridElement origin) {
-        var minDistance = float.MinValue;
+        var minDistance = float.MaxValue;
         GridElement closestPlayer = null;
         foreach (var player in players) {
             if (player == null) continue;
