@@ -19,17 +19,14 @@ public class GameController : MonoBehaviour {
     public BattleController battleControllerObj;
     
     //Character Prefabs
-    public GridElement[] prefabs = new GridElement[3]; //Only 1 prefab for now
+    private GridElement[] players; //Actual players, only 1 for now
 
-    private GridElement[] players = new GridElement[2]; //Actual players, only 1 for now
-
-    private GridElement[] enemies = new GridElement[1];
+    private GridElement[] enemies;
 
     public GridElement[] playersPrefabs = new GridElement[3];
-    public Vector2 lucasLocation;
-    public Vector2 lotharLocation;
-    public Vector2 joanLocation;
-
+    public Vector2[] playersLocations = new Vector2[3];
+    
+    public GridElement[] enemiesPrefabs = new GridElement[1]; //Only 1 prefab for now
     public Vector2[] enemiesLocations;
 
     private GridElement[,] squares;
@@ -50,27 +47,21 @@ public class GameController : MonoBehaviour {
 
         grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(0, 0));
         squares = new GridElement[gridWidth, gridHeight];
+        players = new GridElement[playersPrefabs.Length];
+        enemies = new GridElement[enemiesLocations.Length];
         
         
-        //Lucas
-        //Add instantiate to loop to add more players 
-        players[0] = Instantiate(prefabs[0]);
-        grid.MoveGridElementToXY(players[0], 2, 3);
+        //Start Players
+        for (var i = 0; i < playersPrefabs.Length; i++) {
+            players[i] = Instantiate(playersPrefabs[i]);
+            grid.MoveGridElementToXY(players[i], (int) playersLocations[i].x,(int) playersLocations[i].y);
+        }
         
-        
-        
-
-        //Move player around grid like this
-        
-        
-        //Add instantiate to loop to add more players 
-        players[1] = Instantiate(prefabs[2]);
-
-        //Move player around grid like this
-        grid.MoveGridElementToXY(players[1], 4, 5);
-
-        enemies[0] = Instantiate(prefabs[1]);
-        grid.MoveGridElementToXY(enemies[0], 5, 5);
+        //Start Enemies
+        for (var i = 0; i < enemiesLocations.Length; i++) {
+            enemies[i] = Instantiate(enemiesPrefabs[0]);
+            grid.MoveGridElementToXY(enemies[i], (int) enemiesLocations[i].x, (int) enemiesLocations[i].y);
+        }
 
         pathfinding = new Pathfinding(grid);
     }
@@ -78,8 +69,8 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-        //RadiusTest();
-        PathfindingTest();
+        RadiusTest();
+        //PathfindingTest();
     }
 
     private void PathfindingTest() {
@@ -173,7 +164,10 @@ public class GameController : MonoBehaviour {
 
                 }
                 else {
-                    grid.MoveGridElementToXY(selectedChar, xx, yy);
+                    if (grid.Characters[xx, yy] == null) {
+                        grid.MoveGridElementToXY(selectedChar, xx, yy);
+                    }
+
                 }
             }
             
@@ -191,10 +185,7 @@ public class GameController : MonoBehaviour {
     }
 
     private bool CheckIfCharacterIsInSurroundingSquares(GridElement clickedEnemy) {
-
         
-
-
         //Down
         if (clickedEnemy.Y - 1 > 0) {
             if (selectedChar.X == clickedEnemy.X && selectedChar.Y == clickedEnemy.Y-1) {
@@ -317,5 +308,9 @@ public class GameController : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    private void EnemyMoveOnTurn() {
+        
     }
 }
