@@ -240,9 +240,21 @@ MonoBehaviour:
   gridHeight: 11
   cellSize: 1
   battleControllerObj: {fileID: 1354120424}
-  prefabs:
+  playersPrefabs:
   - {fileID: 6972042235683441773, guid: 4cd8a872a5cb89e4bbe5fefc32629257, type: 3}
+  - {fileID: 1752429229406312767, guid: e98fcbf114464d54286593f83bb0f2b3, type: 3}
+  - {fileID: 2263485006083433940, guid: c7490b0611a80ca4dba8fb15421238fb, type: 3}
+  playersLocations:
+  - {x: 2, y: 3}
+  - {x: 2, y: 2}
+  - {x: 3, y: 1}
+  enemiesPrefabs:
   - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
+  enemiesLocations:
+  - {x: 17, y: 8}
+  - {x: 16, y: 7}
+  - {x: 13, y: 7}
+  - {x: 13, y: 6}
   square: {fileID: 5776360823198830302, guid: 913464d4d3936ff4bb06b9f347ce1f7b, type: 3}
   redSquareColor: {r: 0.6603774, g: 0.3395337, b: 0.3395337, a: 1}
   blueSquareColor: {r: 0.3411765, g: 0.408549, b: 0.6588235, a: 1}
@@ -343,6 +355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c6de74b14d92cb4d8c47972ff0728b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currEnemy: {fileID: 0}
+  currAlly: {fileID: 0}
   battle_bg: {fileID: 0}
   infoPrefab: {fileID: 0}
   enemyPrefab1: {fileID: 0}

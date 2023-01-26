@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour {
     
@@ -17,11 +19,15 @@ public class GameController : MonoBehaviour {
     public BattleController battleControllerObj;
     
     //Character Prefabs
-    public GridElement[] prefabs = new GridElement[2]; //Only 1 prefab for now
+    private GridElement[] players; //Actual players, only 1 for now
 
-    private GridElement[] players = new GridElement[1]; //Actual players, only 1 for now
+    private GridElement[] enemies;
 
-    private GridElement[] enemies = new GridElement[1];
+    public GridElement[] playersPrefabs = new GridElement[3];
+    public Vector2[] playersLocations = new Vector2[3];
+    
+    public GridElement[] enemiesPrefabs = new GridElement[1]; //Only 1 prefab for now
+    public Vector2[] enemiesLocations;
 
     private GridElement[,] squares;
     private bool firstClick = true;
@@ -31,6 +37,9 @@ public class GameController : MonoBehaviour {
     public GridElement square;
     public Color redSquareColor = new Color(0.6603774f, 0.3395337f, 0.3395337f);
     public Color blueSquareColor = new Color(0.3411765f, 0.408549f, 0.6588235f);
+    
+    //PathFinding
+    private Pathfinding pathfinding;
 
     private void Start() {
 
@@ -38,22 +47,58 @@ public class GameController : MonoBehaviour {
 
         grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(0, 0));
         squares = new GridElement[gridWidth, gridHeight];
+        players = new GridElement[playersPrefabs.Length];
+        enemies = new GridElement[enemiesLocations.Length];
         
-        //Add instantiate to loop to add more players 
-        players[0] = Instantiate(prefabs[0]);
+        
+        //Start Players
+        for (var i = 0; i < playersPrefabs.Length; i++) {
+            players[i] = Instantiate(playersPrefabs[i]);
+            grid.MoveGridElementToXY(players[i], (int) playersLocations[i].x,(int) playersLocations[i].y);
+        }
+        
+        //Start Enemies
+        for (var i = 0; i < enemiesLocations.Length; i++) {
+            enemies[i] = Instantiate(enemiesPrefabs[0]);
+            grid.MoveGridElementToXY(enemies[i], (int) enemiesLocations[i].x, (int) enemiesLocations[i].y);
+        }
 
-        //Move player around grid like this
-        grid.MoveGridElementToXY(players[0], 2, 3);
-
-        enemies[0] = Instantiate(prefabs[1]);
-        grid.MoveGridElementToXY(enemies[0], 5, 5);
-
+        pathfinding = new Pathfinding(grid);
     }
 
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
         RadiusTest();
+        //PathfindingTest();
+    }
+
+    private void PathfindingTest() {
+        if (!Input.GetMouseButtonDown(0)) return;
+        
+        var pos = UtilsClass.GetMouseWorldPosition();
+        int xx, yy;
+        grid.GetXY(pos, out xx, out yy);
+        if (firstClick) {
+            if (grid.Characters[xx, yy] == null) return;
+            
+            selectedChar = grid.Characters[xx, yy];
+            firstClick = false;
+        }
+        else {
+            var mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+            grid.GetXY(mouseWorldPosition, out int x, out int y);
+            List<PathNode> path = pathfinding.FindPath(selectedChar.X, selectedChar.Y, x, y);
+            if (path != null) {
+                foreach (var pathNode in path) {
+                    Debug.Log(pathNode.x);
+                    Debug.Log(pathNode.y);
+                }
+            }
+            else {
+                Debug.Log("Path is null");
+            }
+        }
     }
 
     private void RadiusTest() {
@@ -119,7 +164,10 @@ public class GameController : MonoBehaviour {
 
                 }
                 else {
-                    grid.MoveGridElementToXY(selectedChar, xx, yy);
+                    if (grid.Characters[xx, yy] == null) {
+                        grid.MoveGridElementToXY(selectedChar, xx, yy);
+                    }
+
                 }
             }
             
@@ -137,10 +185,7 @@ public class GameController : MonoBehaviour {
     }
 
     private bool CheckIfCharacterIsInSurroundingSquares(GridElement clickedEnemy) {
-
         
-
-
         //Down
         if (clickedEnemy.Y - 1 > 0) {
             if (selectedChar.X == clickedEnemy.X && selectedChar.Y == clickedEnemy.Y-1) {
@@ -263,5 +308,9 @@ public class GameController : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    private void EnemyMoveOnTurn() {
+        
     }
 }
