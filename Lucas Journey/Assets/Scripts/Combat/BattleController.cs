@@ -41,6 +41,7 @@ public class BattleController : MonoBehaviour
     //public void StartBattle(GameObject startingEnemy){
     public void StartBattle(GameObject starting, GameObject victim, Grid gridParameter){
         //currEnemy = startingEnemy;
+        inBattle=true;
         gridInstance = gridParameter; 
         if(starting.GetComponent<Character>().battlePrefab.tag == "Ally"){
             currAlly = starting.GetComponent<Character>().battlePrefab;

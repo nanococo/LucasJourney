@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMonkey.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class GameController : MonoBehaviour {
 
@@ -85,14 +86,22 @@ public class GameController : MonoBehaviour {
             RadiusTest();
         }else if(!EnemyIsMoving){
             EnemyIsMoving=true;
-
+            enemyTurn();
         }
         //PathfindingTest();
     }
     public void enemyTurn(){
         foreach(GridElement currEnemy in enemies){
+            if (currEnemy==null) continue;
             GridElement currAlly =  GetClosestTarget(currEnemy);
             EnemyMoveOnTurn(currAlly, currEnemy );
+        }
+        AllyTurn=true;
+        GameObject[] allies = GameObject.FindGameObjectsWithTag("PlayerStill");
+
+        foreach(GameObject aliado in allies){
+            aliado.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f);
+            aliado.tag = "Player";
         }
     }
 
@@ -191,6 +200,7 @@ public class GameController : MonoBehaviour {
                     }
                     //Start attack
                     battleControllerObj.StartBattle(selectedChar.gameObject, clickedEnemy.gameObject, grid);
+                    TurnUsed(selectedChar);
 
                 }
                 else {
@@ -363,9 +373,29 @@ public class GameController : MonoBehaviour {
             grid.MoveGridElementToXY(origin, path[i].x, path[i].y);
         }
 
-        if (GetDistance(target, origin) <= 1.0f) {
-            battleControllerObj.StartBattle(origin.gameObject, target.gameObject, grid);
+        if (GetDistance(target, origin) <= 1.5f) {
+            Debug.Log("INBATTLE????? "  + BattleController.inBattle);
+            StartCoroutine(waitforBattle(origin.gameObject,target.gameObject));
+
+            
         }
+    }
+
+    public IEnumerator waitforBattle(GameObject origin, GameObject target){
+        
+
+        while (BattleController.inBattle)
+        
+        {
+            Debug.Log("AAAAAAAAAAAANOOOOOOOOOOOOOOOO");
+            yield return null;
+
+        }
+        BattleController.inBattle=true;
+        yield return new WaitForSeconds(2);
+        battleControllerObj.StartBattle(origin, target, grid);
+
+        
     }
 
     private float GetDistance(GridElement target, GridElement origin) {
