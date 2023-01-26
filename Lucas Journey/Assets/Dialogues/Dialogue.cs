@@ -66,7 +66,7 @@ public class Dialogue : MonoBehaviour
         didDialogueStart = true;
         dialoguePanel.SetActive(true);
         lineIndex = 0;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         StartCoroutine(ShowLine());
     }
 
