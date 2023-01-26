@@ -62,7 +62,10 @@ public class FighterStats : MonoBehaviour, IComparable
         
     }
 
-
+    public void KillCharacter(){
+        Destroy(gameObject);
+        GameController.GetComponent<CombatController>().checkRemainingEnemies();
+    }
 
 
     public void ReceiveDamage(float damage){
@@ -72,8 +75,9 @@ public class FighterStats : MonoBehaviour, IComparable
         if(health<=0){
             dead = true;
             gameObject.tag="Dead";
-            Destroy(gameObject);
-            GameController.GetComponent<CombatController>().checkRemainingEnemies();
+            animator.Play("Die");
+            Invoke("KillCharacter",1);
+            
 
         }else if(damage>0){
             healthFill.text = health.ToString();
