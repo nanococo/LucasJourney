@@ -119,10 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe7385bcb1a55149af864da0bace5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 3333288703255488578}
   healthFill: {fileID: 0}
   specialIndicator: {fileID: 0}
-  fighterName: 
+  fighterName: Liridona
   health: 40
   energy: 0
   attack: 20

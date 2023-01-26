@@ -101,12 +101,25 @@ public class CombatController : MonoBehaviour
         }
     }
 
+    public void finishBattle(){
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Foe");
+        GameObject startingPlayer = GameObject.FindGameObjectWithTag("Ally");
+        BattleController.charAlly.GetComponent<Character>().SpecialCounter = startingPlayer.GetComponent<FighterStats>().specialCounter;
+        BattleController.charAlly.GetComponent<Character>().Health = startingPlayer.GetComponent<FighterStats>().health;
+        BattleController.charEnemy.GetComponent<Character>().SpecialCounter = enemies[0].GetComponent<FighterStats>().specialCounter;
+        BattleController.charEnemy.GetComponent<Character>().Health = enemies[0].GetComponent<FighterStats>().health;
+        BattleController.inBattle=false;
+        SceneManager.UnloadSceneAsync("Combat");
+       
+    }
+
     public void NextTurn()
     {
        
         damageText.gameObject.SetActive(false);
         
         if(fighterStats.Count<=0){
+            finishBattle();
             Debug.Log("Termina la batalla, nadie pierde");
         }else{
             FighterStats currentFighterStats = fighterStats[0];
