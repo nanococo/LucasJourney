@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6487680363882885678}
   m_Layer: 0
   m_Name: Wizard01
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,3 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380f6f71c9634c828ae5a8e4d983ee20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartHealth: 0
+  Health: 0
+  Speed: 0
+  Defense: 0
+  Attack: 0
+  SpecialCounter: 0
+  isAlive: 1
+  battlePrefab: {fileID: 0}

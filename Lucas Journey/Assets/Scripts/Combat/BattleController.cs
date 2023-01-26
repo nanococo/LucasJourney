@@ -18,6 +18,7 @@ public class BattleController : MonoBehaviour
     public GameObject enemyPrefab1;
     public string LosingScene;
     public static bool inBattle;
+    public static bool battlefinished;
 
     float sss;
     // Start is called before the first frame update

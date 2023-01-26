@@ -88,8 +88,21 @@ public class GameController : MonoBehaviour {
             EnemyIsMoving=true;
             enemyTurn();
         }
+
+        if(BattleController.battlefinished){
+            BattleController.battlefinished=false;
+        }
         //PathfindingTest();
     }
+
+    private void checkFinish(){
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if(enemies.Length<=0){
+            
+        }
+
+    }
+
     public void enemyTurn(){
         foreach(GridElement currEnemy in enemies){
             if (currEnemy==null) continue;
