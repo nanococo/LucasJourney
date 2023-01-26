@@ -7,15 +7,19 @@ using TMPro;
 
 public class BattleController : MonoBehaviour
 {
-    static GameObject currEnemy;
+    public GameObject currEnemy;
+    public GameObject currAlly;
+    public static Grid gridInstance;
+    public static GameObject charEnemy;
+    public static GameObject charAlly;
+    static bool startedByAlly;
     public GameObject battle_bg;
-    public Sprite floor_sprite;
     public GameObject infoPrefab;
     public GameObject enemyPrefab1;
-    public GameObject enemyPrefab2;
-    public GameObject enemyPrefab3;
     public string LosingScene;
     public static bool inBattle;
+
+    float sss;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,90 +38,83 @@ public class BattleController : MonoBehaviour
     }
 
     
-    public void StartBattle(GameObject startingEnemy){
-        currEnemy = startingEnemy;
+    //public void StartBattle(GameObject startingEnemy){
+    public void StartBattle(GameObject starting, GameObject victim, Grid gridParameter){
+        //currEnemy = startingEnemy;
+        gridInstance = gridParameter; 
+        if(starting.GetComponent<Character>().battlePrefab.tag == "Ally"){
+            currAlly = starting.GetComponent<Character>().battlePrefab;
+            currEnemy = victim.GetComponent<Character>().battlePrefab;
+            charAlly = starting;
+            charEnemy = victim;
+            startedByAlly = true;
+        }else{
+            
+            currAlly = victim.GetComponent<Character>().battlePrefab;
+            currEnemy = starting.GetComponent<Character>().battlePrefab;
+            charAlly = victim;
+            charEnemy =  starting;
+            startedByAlly = false;
+        }
+
+        Debug.Log("Battle should start....");
         StartCoroutine(TriggerBattle());
     }
-    public static void PlayerWon(int energyWon){
-
+    public static void PlayerWon(){
+        
         //PlayerController.energy+=energyWon;
-        Destroy(currEnemy);
+        gridInstance.Characters[charEnemy.GetComponent<GridElement>().X,charEnemy.GetComponent<GridElement>().Y]=null;
+        Destroy(charEnemy);
 
 
     }
 
     public static void PlayerLost(){
  /*       SceneManager.LoadScene( LosingScene);
+ 
 */
+        gridInstance.Characters[charAlly.GetComponent<GridElement>().X,charAlly.GetComponent<GridElement>().Y]=null;
+        Destroy(charAlly);
     }
 
-    public void setEnemy(int slot, GameObject newEnemy){
-        GameObject enemyPosition;
-        GameObject enemyInfo; 
-        switch (slot) {
-            case 2:
-                enemyPosition = GameObject.Find("Position2");
-                enemyInfo = GameObject.Find("EnemyInfo2");
-            break;
-            case 3:
-                enemyPosition = GameObject.Find("Position3");
-                enemyInfo = GameObject.Find("EnemyInfo3");
-            break;
-            default:
-                enemyPosition = GameObject.Find("Position1");
-                enemyInfo = GameObject.Find("EnemyInfo1");
-            break;
 
+    public void setFighter(bool isAlly, GameObject newFighter){
+        GameObject Position;
+        GameObject Info; 
+        GameObject Char; 
+        if(isAlly){
+            Position = GameObject.Find("Ally_Slot");
+            Char = charAlly;
+            Info = GameObject.Find("Info/Ally");
+        }else{
+            Position = GameObject.Find("Enemy_Slot");
+            Info = GameObject.Find("Info/Foe");
+            Char = charEnemy;
         }
-        GameObject Enemy = Instantiate (newEnemy) as GameObject;
-        GameObject Info = Instantiate (infoPrefab) as GameObject;
-        Enemy.transform.SetParent(enemyPosition.transform);
-        Enemy.transform.localPosition = Vector3.zero;   
-        /*Enemy.GetComponent<FighterStats>().healthFill = Info.transform.Find("HealthBar/HealthFill").gameObject;
-        Enemy.GetComponent<FighterStats>().energyFill = Info.transform.Find("EnergyBar/EnergyFill").gameObject;
-        */
         
+      
+        GameObject Fighter = Instantiate (newFighter, Position.transform) as GameObject;
+        Info.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = Fighter.GetComponent<FighterStats>().fighterName;
+        Info.transform.Find("Speed").GetComponent<TextMeshProUGUI>().text = Fighter.GetComponent<FighterStats>().speed.ToString();
+        Info.transform.Find("ATK").GetComponent<TextMeshProUGUI>().text = Fighter.GetComponent<FighterStats>().attack.ToString();
+        Fighter.GetComponent<FighterStats>().specialIndicator = Info.transform.Find("Special").GetComponent<Image>();
+        Fighter.GetComponent<FighterStats>().healthFill = Info.transform.Find("Health").GetComponent<TextMeshProUGUI>();
+        Info.transform.Find("Health").GetComponent<TextMeshProUGUI>().text = Char.GetComponent<Character>().Health.ToString();
+        
+        Fighter.GetComponent<FighterStats>().attack = Char.GetComponent<Character>().Attack;
+        Fighter.GetComponent<FighterStats>().startHealth = Char.GetComponent<Character>().StartHealth;
+        Fighter.GetComponent<FighterStats>().health = Char.GetComponent<Character>().Health;
+        Fighter.GetComponent<FighterStats>().defense = Char.GetComponent<Character>().Defense;
+        Fighter.GetComponent<FighterStats>().speed = Char.GetComponent<Character>().Speed;
+        Fighter.GetComponent<FighterStats>().specialCounter = Char.GetComponent<Character>().SpecialCounter;
 
-        Info.transform.SetParent(enemyInfo.transform);
-        Info.transform.localPosition = Vector3.zero;   
-        Info.transform.localScale = new Vector3(1f,1f,1f);   
-        Info.transform.Find("Portrait/EnemyPortrait").GetComponent<Image>().sprite = Enemy.GetComponent<FighterAction>().Icon;
-        ///Info.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = Enemy.GetComponent<FighterStats>().fighterName;
+
+
         
 
     }
-    private void setPlayerStats(){
-        GameObject startingPlayer = GameObject.FindGameObjectWithTag("Ally");
-        /*
-        startingPlayer.GetComponent<FighterStats>().attack = PlayerController.Instance.attack_player;
-        startingPlayer.GetComponent<FighterStats>().defense = PlayerController.Instance.defense_player;
-        startingPlayer.GetComponent<FighterStats>().speed = PlayerController.Instance.speed_player;
-        startingPlayer.GetComponent<FighterStats>().special = PlayerController.Instance.special_player;
-        startingPlayer.GetComponent<FighterStats>().defense = PlayerController.Instance.defense_player;
-        startingPlayer.GetComponent<FighterStats>().startHealth = PlayerController.Instance.health_player;
-        startingPlayer.GetComponent<FighterStats>().startEnergy = PlayerController.Instance.energy_player;
-        startingPlayer.GetComponent<FighterStats>().health = PlayerController.Instance.current_health_player;
-        startingPlayer.GetComponent<FighterStats>().energy = PlayerController.Instance.current_energy_player;
-        
 
-        Transform healthTransform=startingPlayer.GetComponent<FighterStats>().healthFill.GetComponent<RectTransform>();
-        Vector2 healthScale = healthTransform.localScale;
-
-        Transform energyTransform = startingPlayer.GetComponent<FighterStats>().energyFill.GetComponent<RectTransform>();
-        Vector2 energyScale = energyTransform.localScale;
-
-        ///float xNewHealthScale= healthScale.x * (PlayerController.Instance.current_health_player/PlayerController.Instance.health_player);
-           
-        healthTransform.localScale=new Vector2(xNewHealthScale, healthScale.y);
-
-
-        float xNewEnergyScale=energyScale.x*(PlayerController.Instance.current_energy_player/PlayerController.Instance.energy_player);
-        energyTransform.localScale=new Vector2(xNewEnergyScale,energyScale.y);
-        */
-    }
     private void setScene(){
-        GameObject.Find("Tile1").GetComponent<SpriteRenderer>().sprite = floor_sprite;
-        GameObject.Find("Tile2").GetComponent<SpriteRenderer>().sprite = floor_sprite;
         GameObject BG = Instantiate (battle_bg) as GameObject;
         BG.transform.SetParent(GameObject.Find("Background_Battles").transform);
         BG.transform.localPosition = Vector3.zero;   
@@ -129,20 +126,20 @@ public class BattleController : MonoBehaviour
     public IEnumerator TriggerBattle(){
         
         Scene originalScene = SceneManager.GetActiveScene();
-        AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("TurnBased", LoadSceneMode.Additive);
+        AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("Combat", LoadSceneMode.Additive);
         while (!sceneLoad.isDone)
         {
             yield return null;
 
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("TurnBased"));
-        ///setEnemy(1, currEnemy.GetComponent<BattleDescriptor>().Enemy1);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Combat"));
+        
+        //
+        setFighter(true, currAlly);
+        setFighter(false, currEnemy);
 
-        
-        setPlayerStats();
-        setScene();
-        
         SceneManager.SetActiveScene(originalScene);
+     
         
     }
 }

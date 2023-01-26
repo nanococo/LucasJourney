@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7536675225072143824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.57, y: -11.25, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1257052653
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 099fce91710852042bad638e34299719, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,10 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe7385bcb1a55149af864da0bace5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 7536675225072143831}
   healthFill: {fileID: 0}
-  fighterName: 
-  energyFill: {fileID: 0}
+  specialIndicator: {fileID: 0}
+  fighterName: Lucas
   health: 60
   energy: 50
   attack: 15
@@ -131,11 +131,10 @@ MonoBehaviour:
   special: 20
   speed: 30
   experience: 0
-  startHealth: 0
+  specialCounter: 0
+  startHealth: 60
   startEnergy: 0
   nextActTurn: 0
-  healthTransform: {fileID: 0}
-  energyTransform: {fileID: 0}
   healthScale: {x: 0, y: 0}
   energyScale: {x: 0, y: 0}
   GameController: {fileID: 0}
@@ -152,7 +151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleePrefab: {fileID: 5130245958838143142}
-  rangePrefab: {fileID: 0}
   Icon: {fileID: 0}
 --- !u!1001 &7403850636298985025
 PrefabInstance:

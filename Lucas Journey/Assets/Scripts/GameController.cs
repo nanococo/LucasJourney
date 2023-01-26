@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour {
     
     //Grid Object
     private Grid grid;
+
+    public BattleController battleControllerObj;
     
     //Character Prefabs
     public GridElement[] prefabs = new GridElement[3]; //Only 1 prefab for now
@@ -43,6 +45,9 @@ public class GameController : MonoBehaviour {
     private Pathfinding pathfinding;
 
     private void Start() {
+
+        battleControllerObj = GameObject.Find("BattleControllerObj").GetComponent<BattleController>();
+
         grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(0, 0));
         squares = new GridElement[gridWidth, gridHeight];
         
@@ -67,9 +72,6 @@ public class GameController : MonoBehaviour {
         enemies[0] = Instantiate(prefabs[1]);
         grid.MoveGridElementToXY(enemies[0], 5, 5);
 
-        //Example: How to access to player stats
-        players[0].GetComponent<Character>().Health = 10;
-        
         pathfinding = new Pathfinding(grid);
     }
 
@@ -162,10 +164,12 @@ public class GameController : MonoBehaviour {
                         }
                     }
                     else {
+                        //Testing Trigger
+                        
                         Debug.Log("Adjacent");
                     }
                     //Start attack
-
+                    battleControllerObj.StartBattle(selectedChar.gameObject, clickedEnemy.gameObject, grid);
 
                 }
                 else {
@@ -187,6 +191,10 @@ public class GameController : MonoBehaviour {
     }
 
     private bool CheckIfCharacterIsInSurroundingSquares(GridElement clickedEnemy) {
+
+        
+
+
         //Down
         if (clickedEnemy.Y - 1 > 0) {
             if (selectedChar.X == clickedEnemy.X && selectedChar.Y == clickedEnemy.Y-1) {
