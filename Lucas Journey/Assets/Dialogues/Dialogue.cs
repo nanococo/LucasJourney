@@ -24,6 +24,7 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
         Invoke("Update",6f);
     }
 

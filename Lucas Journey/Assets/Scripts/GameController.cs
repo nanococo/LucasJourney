@@ -11,6 +11,10 @@ public class GameController : MonoBehaviour {
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
     [SerializeField] private float cellSize;
+
+    public GameObject WinCanvas;
+
+    public GameObject LoseCanvas;
     
     //Grid Object
     private Grid grid;
@@ -80,6 +84,8 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
+         if (Input.GetButtonDown("Fire2"))
+            fixturn();
         if(AllyTurn){
 
         
@@ -91,6 +97,7 @@ public class GameController : MonoBehaviour {
 
         if(BattleController.battlefinished){
             BattleController.battlefinished=false;
+            checkFinish();
         }
         //PathfindingTest();
     }
@@ -98,7 +105,14 @@ public class GameController : MonoBehaviour {
     private void checkFinish(){
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if(enemies.Length<=0){
-            
+            WinCanvas.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        GameObject[] pausedAllies = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] Allies = GameObject.FindGameObjectsWithTag("PlayerStill");
+        if(pausedAllies.Length<=0 && Allies.Length<=0){
+            LoseCanvas.SetActive(true);
+            Time.timeScale = 0f;
         }
 
     }
@@ -125,9 +139,19 @@ public class GameController : MonoBehaviour {
         if(enemies.Length<=0){
             //Change turn
             AllyTurn = false;
-            Debug.Log("Change Turn");
             EnemyIsMoving=false;
         }
+    }
+
+    public void fixturn(){
+        GameObject[] allies = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach(GameObject aliado in allies){
+            aliado.GetComponent<SpriteRenderer>().color = new Color(0.4f,0.4f,0.4f);
+            aliado.tag = "PlayerStill";
+        }
+        AllyTurn = false;
+            EnemyIsMoving=false;
     }
     private void PathfindingTest() {
         if (!Input.GetMouseButtonDown(0)) return;
@@ -169,6 +193,7 @@ public class GameController : MonoBehaviour {
             if (IsEnemyThere(xx,yy)) return;
             if (grid.Characters[xx, yy] == null) return;
             selectedChar = grid.Characters[xx, yy];
+            Debug.Log(selectedChar.tag);
             if (selectedChar.tag.CompareTo("PlayerStill")==0) return;
             firstClick = false;
 
@@ -387,7 +412,6 @@ public class GameController : MonoBehaviour {
         }
 
         if (GetDistance(target, origin) <= 1.5f) {
-            Debug.Log("INBATTLE????? "  + BattleController.inBattle);
             StartCoroutine(waitforBattle(origin.gameObject,target.gameObject));
 
             
@@ -400,12 +424,11 @@ public class GameController : MonoBehaviour {
         while (BattleController.inBattle)
         
         {
-            Debug.Log("AAAAAAAAAAAANOOOOOOOOOOOOOOOO");
             yield return null;
 
         }
         BattleController.inBattle=true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         battleControllerObj.StartBattle(origin, target, grid);
 
         

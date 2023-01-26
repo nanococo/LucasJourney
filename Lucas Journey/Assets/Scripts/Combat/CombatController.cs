@@ -114,6 +114,7 @@ public class CombatController : MonoBehaviour
         BattleController.charEnemy.GetComponent<Character>().SpecialCounter = enemies[0].GetComponent<FighterStats>().specialCounter;
         BattleController.charEnemy.GetComponent<Character>().Health = enemies[0].GetComponent<FighterStats>().health;
         BattleController.inBattle=false;
+        BattleController.battlefinished=true;
         SceneManager.UnloadSceneAsync("Combat");
        
     }
