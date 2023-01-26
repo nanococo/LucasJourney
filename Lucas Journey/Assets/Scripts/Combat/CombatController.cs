@@ -82,17 +82,22 @@ public class CombatController : MonoBehaviour
         
 
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyBattle");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Foe");
         if(enemies.Length<=0){
             GameObject startingPlayer = GameObject.FindGameObjectWithTag("Ally");
             BattleController.inBattle=false;
             SceneManager.UnloadSceneAsync("Combat");
-            BattleController.PlayerWon(energyGained);
+            BattleController.charAlly.GetComponent<Character>().SpecialCounter = startingPlayer.GetComponent<FighterStats>().specialCounter;
+            BattleController.charAlly.GetComponent<Character>().Health = startingPlayer.GetComponent<FighterStats>().health;
+            BattleController.PlayerWon();
         }else if(GameObject.FindGameObjectWithTag("Ally")==null){
+            
+            BattleController.charEnemy.GetComponent<Character>().SpecialCounter = enemies[0].GetComponent<FighterStats>().specialCounter;
+            BattleController.charEnemy.GetComponent<Character>().Health = enemies[0].GetComponent<FighterStats>().health;
             BattleController.PlayerLost();
             BattleController.inBattle=false;
-            SceneManager.UnloadSceneAsync("TurnBased");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.UnloadSceneAsync("Combat");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

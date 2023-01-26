@@ -118,3 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380f6f71c9634c828ae5a8e4d983ee20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartHealth: 1
+  Health: 40
+  Speed: 15
+  Defense: 0.4
+  Attack: 9
+  SpecialCounter: 0
+  battlePrefab: {fileID: 5212814263192810491, guid: 91a73f3e9a05e2943b94f1d5af47c285, type: 3}
