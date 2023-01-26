@@ -504,10 +504,12 @@ MonoBehaviour:
   - {fileID: 6972042235683441773, guid: 4cd8a872a5cb89e4bbe5fefc32629257, type: 3}
   - {fileID: 1752429229406312767, guid: e98fcbf114464d54286593f83bb0f2b3, type: 3}
   - {fileID: 2263485006083433940, guid: c7490b0611a80ca4dba8fb15421238fb, type: 3}
+  - {fileID: 3096387948095033593, guid: 8a0212db867faaf4392bc2b00aff35e9, type: 3}
   playersLocations:
   - {x: 2, y: 3}
   - {x: 2, y: 2}
   - {x: 1, y: 1}
+  - {x: 1, y: 2}
   enemiesPrefabs:
   - {fileID: 4828148304471446381, guid: 4d0cec74b9160174480f83f9391249a8, type: 3}
   - {fileID: 4701650800350267575, guid: 5dce144ebeb053d4d95473f3cd6bfe59, type: 3}
@@ -736,6 +738,14 @@ PrefabInstance:
     - target: {fileID: 7299436466288824857, guid: 26460373a16574e45b885b80360cec8a, type: 3}
       propertyPath: m_Name
       value: Fix
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299436467134825323, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 113.900024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299436467134825323, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -41.299988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26460373a16574e45b885b80360cec8a, type: 3}
