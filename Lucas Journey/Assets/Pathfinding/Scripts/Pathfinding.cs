@@ -33,6 +33,10 @@ public class Pathfinding {
                 if (grid.Characters[x,y]!=null) {
                     pathNodes[x,y].SetIsWalkable(false);
                 }
+
+                if (this.grid.unWalkableGrid[x,y]) {
+                    pathNodes[x,y].SetIsWalkable(false);
+                }
             }
         }
     }
