@@ -133,7 +133,7 @@ public class BattleController : MonoBehaviour
 
         }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Combat"));
-        
+        GameObject.Find("CombatControllerObj").GetComponent<CombatController>().startedByPlayer=startedByAlly;
         //
         setFighter(true, currAlly);
         setFighter(false, currEnemy);

@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour {
     private GridElement[,] squares;
     private bool firstClick = true;
     private GridElement selectedChar;
+
+    bool AllyTurn;
+    bool EnemyIsMoving;
     
     //Square Prefab
     public GridElement square;
@@ -45,6 +48,7 @@ public class GameController : MonoBehaviour {
     public Vector2[] unWalkablePositions;
 
     private void Start() {
+        AllyTurn=true;
 
         battleControllerObj = GameObject.Find("BattleControllerObj").GetComponent<BattleController>();
 
@@ -77,10 +81,34 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-        RadiusTest();
+        if(AllyTurn){
+
+        
+            RadiusTest();
+        }else if(!EnemyIsMoving){
+            EnemyIsMoving=true;
+
+        }
         //PathfindingTest();
     }
+    public void enemyTurn(){
+        foreach(GridElement currEnemy in enemies){
+            GridElement currAlly =  GetClosestTarget(currEnemy);
+            EnemyMoveOnTurn(currAlly, currEnemy );
+        }
+    }
 
+    public void TurnUsed(GridElement selectedChar){
+        selectedChar.GetComponent<SpriteRenderer>().color = new Color(0.4f,0.4f,0.4f);
+        selectedChar.tag = "PlayerStill";
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Player");
+        if(enemies.Length<=0){
+            //Change turn
+            AllyTurn = false;
+            Debug.Log("Change Turn");
+            EnemyIsMoving=false;
+        }
+    }
     private void PathfindingTest() {
         if (!Input.GetMouseButtonDown(0)) return;
         
@@ -121,6 +149,7 @@ public class GameController : MonoBehaviour {
             if (IsEnemyThere(xx,yy)) return;
             if (grid.Characters[xx, yy] == null) return;
             selectedChar = grid.Characters[xx, yy];
+            if (selectedChar.tag.CompareTo("PlayerStill")==0) return;
             firstClick = false;
 
             //var mousePos = grid.GetWorldPosition(xx, yy) + new Vector3(cellSize, cellSize) * .5f;
@@ -169,6 +198,7 @@ public class GameController : MonoBehaviour {
                 else {
                     if (grid.Characters[xx, yy] == null && grid.unWalkableGrid[xx,yy]==false) {
                         grid.MoveGridElementToXY(selectedChar, xx, yy);
+                        TurnUsed(selectedChar);
                     }
 
                 }
@@ -336,7 +366,7 @@ public class GameController : MonoBehaviour {
         }
 
         if (GetDistance(target, origin) <= 1.0f) {
-            //trigger battle
+            battleControllerObj.StartBattle(origin.gameObject, target.gameObject, grid);
         }
     }
 
