@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d8c93826ae6a6a647a510c7d28fb5207, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f650e3a909481c428f669379a48d6d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}
   enemiesLocations:
   - {x: 17, y: 8}
-  - {x: 16, y: 7}
+  - {x: 16, y: 9}
   - {x: 13, y: 7}
   - {x: 13, y: 6}
   square: {fileID: 5776360823198830302, guid: 913464d4d3936ff4bb06b9f347ce1f7b, type: 3}
