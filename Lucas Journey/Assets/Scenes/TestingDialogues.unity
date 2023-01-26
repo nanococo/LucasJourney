@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc3fb2dc975b5e488e62e8277e1396a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextScene: TestingGrid
+  NextScene: TestingGridBattles
   dialoguePanel: {fileID: 725026951}
   dialogueText: {fileID: 1623616489}
   dialogueLines:
