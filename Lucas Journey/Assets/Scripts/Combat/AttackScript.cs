@@ -82,6 +82,7 @@ public class AttackScript : MonoBehaviour
 
     public void heal()
     {
+        attackerStats=owner.GetComponent<FighterStats>();
         attackerStats.specialCounter =0;
         attackerStats.updateSpecialIndicator();
         attackerStats=owner.GetComponent<FighterStats>();
