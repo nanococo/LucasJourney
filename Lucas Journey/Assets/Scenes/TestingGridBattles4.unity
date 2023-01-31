@@ -459,10 +459,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2929150198609905423, guid: 3eff9d9f8ccb1644aaf9f073f2ea441d, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 86f36a20ede76024a9199c8d101ff84b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3eff9d9f8ccb1644aaf9f073f2ea441d, type: 3}
 --- !u!1 &991196625
@@ -509,7 +505,7 @@ MonoBehaviour:
   - {x: 2, y: 3}
   - {x: 2, y: 2}
   - {x: 1, y: 1}
-  - {x: 1, y: 2}
+  - {x: 3, y: 2}
   enemiesPrefabs:
   - {fileID: 4828148304471446381, guid: 4d0cec74b9160174480f83f9391249a8, type: 3}
   - {fileID: 4701650800350267575, guid: 5dce144ebeb053d4d95473f3cd6bfe59, type: 3}

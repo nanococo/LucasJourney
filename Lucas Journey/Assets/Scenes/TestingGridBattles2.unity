@@ -441,7 +441,7 @@ MonoBehaviour:
   - {x: 2, y: 3}
   - {x: 2, y: 2}
   - {x: 3, y: 1}
-  - {x: 1, y: 2}
+  - {x: 3, y: 2}
   enemiesPrefabs:
   - {fileID: 6371679182223092476, guid: b1275a1a7f2efca41a55983999e75fdc, type: 3}
   - {fileID: 2459971008832076815, guid: c152f47e863cd794989f358f6e6add44, type: 3}

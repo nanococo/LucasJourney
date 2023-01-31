@@ -126,7 +126,6 @@ public class CombatController : MonoBehaviour
         
         if(fighterStats.Count<=0){
             finishBattle();
-            Debug.Log("Termina la batalla, nadie pierde");
         }else{
             FighterStats currentFighterStats = fighterStats[0];
             fighterStats.Remove(currentFighterStats);

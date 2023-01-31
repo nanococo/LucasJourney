@@ -72,7 +72,6 @@ public class AttackScript : MonoBehaviour
         float multiplier = Random.Range(minAttackMultiplier, maxAttackMultiplier);
         
         damage=multiplier*attackerStats.attack; // guardbreak damage
-        Debug.Log("True damage   "+ damage);
         damage = Mathf.Max(0,damage);
         owner.GetComponent<Animator>().Play(animationName);
         targetStats.ReceiveDamage(Mathf.CeilToInt(damage));

@@ -65,6 +65,7 @@ public class GameController : MonoBehaviour {
         //Start Players
         for (var i = 0; i < playersPrefabs.Length; i++) {
             players[i] = Instantiate(playersPrefabs[i]);
+            Debug.Log("CHarr  "+players[i]+"     " +playersLocations[i].x+"   "+playersLocations[i].y);
             grid.MoveGridElementToXY(players[i], (int) playersLocations[i].x,(int) playersLocations[i].y);
         }
         
@@ -193,13 +194,15 @@ public class GameController : MonoBehaviour {
         var pos = UtilsClass.GetMouseWorldPosition();
         int xx, yy;
         grid.GetXY(pos, out xx, out yy);
-
+        
 
         if (firstClick) {
             if (IsEnemyThere(xx,yy)) return;
-            if (grid.Characters[xx, yy] == null) return;
+            if (grid.Characters[xx, yy] == null){
+                return;
+            } 
             selectedChar = grid.Characters[xx, yy];
-            Debug.Log(selectedChar.tag);
+            
             if (selectedChar.tag.CompareTo("PlayerStill")==0) return;
             firstClick = false;
 

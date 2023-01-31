@@ -59,7 +59,6 @@ public class BattleController : MonoBehaviour
             startedByAlly = false;
         }
 
-        Debug.Log("Battle should start....");
         StartCoroutine(TriggerBattle());
     }
     public static void PlayerWon(){
