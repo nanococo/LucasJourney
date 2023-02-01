@@ -9,6 +9,7 @@ TagManager:
   - Dead
   - PlayerStill
   - Enemy
+  - BG
   layers:
   - Default
   - TransparentFX

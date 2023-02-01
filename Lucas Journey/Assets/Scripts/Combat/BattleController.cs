@@ -13,7 +13,7 @@ public class BattleController : MonoBehaviour
     public static GameObject charEnemy;
     public static GameObject charAlly;
     static bool startedByAlly;
-    public GameObject battle_bg;
+    public Sprite battle_bg;
     public GameObject infoPrefab;
     public GameObject enemyPrefab1;
     public string LosingScene;
@@ -116,10 +116,7 @@ public class BattleController : MonoBehaviour
     }
 
     private void setScene(){
-        GameObject BG = Instantiate (battle_bg) as GameObject;
-        BG.transform.SetParent(GameObject.Find("Background_Battles").transform);
-        BG.transform.localPosition = Vector3.zero;   
-        BG.transform.localScale = new Vector3(1f,1f,1f); 
+        GameObject.FindGameObjectWithTag("BG").GetComponent<SpriteRenderer>().sprite = battle_bg;
 
     }
 
@@ -136,6 +133,7 @@ public class BattleController : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Combat"));
         GameObject.Find("CombatControllerObj").GetComponent<CombatController>().startedByPlayer=startedByAlly;
         //
+        setScene();
         setFighter(true, currAlly);
         setFighter(false, currEnemy);
 

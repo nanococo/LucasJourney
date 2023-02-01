@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
     private GridElement[,] squares;
     private bool firstClick = true;
     private GridElement selectedChar;
-
+    private int currentEnemyMoving;
     bool AllyTurn;
     bool EnemyIsMoving;
     
@@ -65,7 +65,6 @@ public class GameController : MonoBehaviour {
         //Start Players
         for (var i = 0; i < playersPrefabs.Length; i++) {
             players[i] = Instantiate(playersPrefabs[i]);
-            Debug.Log("CHarr  "+players[i]+"     " +playersLocations[i].x+"   "+playersLocations[i].y);
             grid.MoveGridElementToXY(players[i], (int) playersLocations[i].x,(int) playersLocations[i].y);
         }
         
@@ -86,7 +85,7 @@ public class GameController : MonoBehaviour {
     private void Update() {
         //HandleClickToModifyGrid();
         //ClickTest();
-         if (Input.GetButtonDown("Fire2") && !BattleController.inBattle)
+         if (Input.GetButtonDown("Fire2") && !BattleController.inBattle && !EnemyIsMoving)
             fixturn();
         if(Input.GetButtonDown("Fire3") && !BattleController.inBattle){ 
             BattleController.inBattle = false;
@@ -123,8 +122,35 @@ public class GameController : MonoBehaviour {
         }
 
     }
+    private void yieldTurn(){
+        currentEnemyMoving++;
+        EnemyIsMoving=false;
+    }
 
     public void enemyTurn(){
+        while(enemies.Length>currentEnemyMoving && enemies[currentEnemyMoving]== null){
+            currentEnemyMoving++;
+        }
+        Debug.Log(currentEnemyMoving);
+        if(enemies.Length>currentEnemyMoving){
+            GridElement currAlly =  GetClosestTarget(enemies[currentEnemyMoving]);
+            EnemyMoveOnTurn(currAlly, enemies[currentEnemyMoving] );
+        }else{
+            AllyTurn=true;
+            GameObject[] allies = GameObject.FindGameObjectsWithTag("PlayerStill");
+
+            foreach(GameObject aliado in allies){
+                aliado.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f);
+                aliado.tag = "Player";
+            }
+        }
+        
+
+        
+        /*
+        
+
+
         foreach(GridElement currEnemy in enemies){
             if (currEnemy==null) continue;
             GridElement currAlly =  GetClosestTarget(currEnemy);
@@ -137,6 +163,7 @@ public class GameController : MonoBehaviour {
             aliado.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f);
             aliado.tag = "Player";
         }
+        */
     }
 
     public void TurnUsed(GridElement selectedChar){
@@ -145,6 +172,7 @@ public class GameController : MonoBehaviour {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Player");
         if(enemies.Length<=0){
             //Change turn
+            currentEnemyMoving=0;
             AllyTurn = false;
             EnemyIsMoving=false;
         }
@@ -158,7 +186,9 @@ public class GameController : MonoBehaviour {
             aliado.tag = "PlayerStill";
         }
         AllyTurn = false;
+        currentEnemyMoving=0;
             EnemyIsMoving=false;
+            
     }
     private void PathfindingTest() {
         if (!Input.GetMouseButtonDown(0)) return;
@@ -424,22 +454,26 @@ public class GameController : MonoBehaviour {
             StartCoroutine(waitforBattle(origin.gameObject,target.gameObject));
 
             
+        }else{
+            Invoke( "yieldTurn",1.5f);
         }
     }
 
     public IEnumerator waitforBattle(GameObject origin, GameObject target){
         
 
+        
+        BattleController.inBattle=true;
+        yield return new WaitForSeconds(0.5f);
+        BattleController.inBattle=true;
+        battleControllerObj.StartBattle(origin, target, grid);
         while (BattleController.inBattle)
         
         {
             yield return null;
 
         }
-        BattleController.inBattle=true;
-        yield return new WaitForSeconds(0.5f);
-        battleControllerObj.StartBattle(origin, target, grid);
-
+        Invoke( "yieldTurn",1.5f);
         
     }
 

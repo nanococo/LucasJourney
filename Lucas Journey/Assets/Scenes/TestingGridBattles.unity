@@ -491,7 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currEnemy: {fileID: 0}
   currAlly: {fileID: 0}
-  battle_bg: {fileID: 0}
+  battle_bg: {fileID: 1124721337, guid: dd9b3df9707dd7847b479f7ba9a97b9b, type: 3}
   infoPrefab: {fileID: 0}
   enemyPrefab1: {fileID: 0}
   LosingScene: 
@@ -611,7 +611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7299436467134825323, guid: 26460373a16574e45b885b80360cec8a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -41.299988
+      value: -41.300003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26460373a16574e45b885b80360cec8a, type: 3}

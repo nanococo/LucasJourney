@@ -320,6 +320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c4851da46a17749890514a95d0678b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &287457032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5473761657408808475, guid: cff53180ed8b9f243a6da43108841340, type: 3}
+  m_PrefabInstance: {fileID: 14011477}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &550861076
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,8 +498,8 @@ MonoBehaviour:
   gridWidth: 19
   gridHeight: 11
   cellSize: 1
-  WinCanvas: {fileID: 0}
-  LoseCanvas: {fileID: 0}
+  WinCanvas: {fileID: 287457032}
+  LoseCanvas: {fileID: 1202710891}
   battleControllerObj: {fileID: 1354120424}
   playersPrefabs:
   - {fileID: 6972042235683441773, guid: 4cd8a872a5cb89e4bbe5fefc32629257, type: 3}
@@ -741,10 +746,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7299436467134825323, guid: 26460373a16574e45b885b80360cec8a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -41.299988
+      value: -41.300003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26460373a16574e45b885b80360cec8a, type: 3}
+--- !u!1 &1202710891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 404618899753956731, guid: 6d32c92c0f32a484cb1b613d80fb5cf2, type: 3}
+  m_PrefabInstance: {fileID: 1444156890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1223818672
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,7 +844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currEnemy: {fileID: 0}
   currAlly: {fileID: 0}
-  battle_bg: {fileID: 0}
+  battle_bg: {fileID: -1815943039, guid: 5d969463a75bc754da2a937c53b649b2, type: 3}
   infoPrefab: {fileID: 0}
   enemyPrefab1: {fileID: 0}
   LosingScene: 
